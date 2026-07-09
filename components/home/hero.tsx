@@ -158,20 +158,6 @@ export function Hero() {
           </Link>
         </motion.div>
       </div>
-
-      {/* Indicateurs du slideshow */}
-      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-2.5">
-        {SLIDES.map((_, idx) => (
-          <button
-            key={idx}
-            aria-label={`Voir la photo ${idx + 1}`}
-            onClick={() => setI(idx)}
-            className={`h-1 rounded-full transition-all duration-500 ${
-              idx === i ? "w-9 bg-gilt" : "w-4 bg-bone/50 hover:bg-bone"
-            }`}
-          />
-        ))}
-      </div>
     </section>
   );
 }
