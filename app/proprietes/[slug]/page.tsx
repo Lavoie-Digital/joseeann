@@ -1,0 +1,206 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { Container, ButtonLink, Eyebrow } from "@/components/ui";
+import { Reveal } from "@/components/motion";
+import { Gallery } from "@/components/proprietes/gallery";
+import {
+  demoListings,
+  getListingBySlug,
+  formatPrice,
+  formatArea,
+} from "@/lib/listings";
+import {
+  BedDouble,
+  Bath,
+  Maximize,
+  Car,
+  CalendarDays,
+  MapPin,
+  ArrowLeft,
+  LandPlot,
+} from "lucide-react";
+
+export function generateStaticParams() {
+  return demoListings.map((l) => ({ slug: l.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const listing = await getListingBySlug(slug);
+  if (!listing) return { title: "Propriété introuvable" };
+  return {
+    title: listing.title,
+    description: listing.description.slice(0, 155),
+  };
+}
+
+export default async function ListingPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const listing = await getListingBySlug(slug);
+  if (!listing) notFound();
+
+  const specs = [
+    listing.bedrooms != null && {
+      icon: BedDouble,
+      label: "Chambres",
+      value: listing.bedrooms,
+    },
+    listing.bathrooms != null && {
+      icon: Bath,
+      label: "Salles de bain",
+      value: listing.bathrooms,
+    },
+    listing.livingArea && {
+      icon: Maximize,
+      label: "Superficie",
+      value: formatArea(listing.livingArea),
+    },
+    listing.lotArea && {
+      icon: LandPlot,
+      label: "Terrain",
+      value: formatArea(listing.lotArea),
+    },
+    listing.parking != null && {
+      icon: Car,
+      label: "Stationnement",
+      value: listing.parking,
+    },
+    listing.yearBuilt && {
+      icon: CalendarDays,
+      label: "Année",
+      value: listing.yearBuilt,
+    },
+  ].filter(Boolean) as { icon: typeof BedDouble; label: string; value: React.ReactNode }[];
+
+  return (
+    <article className="bg-bone">
+      <Container className="pt-32 lg:pt-40">
+        <Link
+          href="/proprietes"
+          className="inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.18em] text-clay transition-colors hover:text-ink"
+        >
+          <ArrowLeft strokeWidth={1.4} className="h-4 w-4" />
+          Toutes les propriétés
+        </Link>
+
+        <div className="mt-8 flex flex-col justify-between gap-6 border-b border-taupe/30 pb-10 md:flex-row md:items-end">
+          <div>
+            <span className="eyebrow inline-flex items-center gap-3 text-clay">
+              <span className="h-px w-8 bg-gilt" />
+              {listing.propertyType}
+            </span>
+            <h1 className="mt-5 max-w-3xl font-display text-[clamp(2.2rem,4.5vw,3.8rem)] font-light leading-tight text-ink">
+              {listing.title}
+            </h1>
+            <p className="mt-4 flex items-center gap-2 text-smoke">
+              <MapPin strokeWidth={1.4} className="h-4 w-4 text-taupe" />
+              {listing.address}, {listing.city} · {listing.region}
+            </p>
+          </div>
+          <div className="md:text-right">
+            <p className="font-display text-[clamp(2rem,3.5vw,3rem)] font-light text-ink">
+              {formatPrice(listing.price)}
+            </p>
+            <p className="mt-1 text-xs uppercase tracking-[0.2em] text-clay">
+              N° {listing.id}
+            </p>
+          </div>
+        </div>
+      </Container>
+
+      <Container className="pt-10">
+        <Gallery images={listing.images} title={listing.title} />
+      </Container>
+
+      <Container className="py-16 lg:py-24">
+        <div className="grid gap-16 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <Reveal>
+              <div className="grid grid-cols-2 gap-y-8 border-y border-taupe/30 py-10 sm:grid-cols-3">
+                {specs.map((s) => (
+                  <div key={s.label}>
+                    <s.icon strokeWidth={1.3} className="h-5 w-5 text-gilt" />
+                    <p className="mt-3 font-display text-2xl font-light text-ink">
+                      {s.value}
+                    </p>
+                    <p className="text-xs uppercase tracking-[0.16em] text-clay">
+                      {s.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <h2 className="mt-14 font-display text-3xl font-light text-ink">
+                À propos de cette propriété
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed text-charcoal">
+                {listing.description}
+              </p>
+            </Reveal>
+
+            {listing.highlights.length > 0 && (
+              <Reveal delay={0.15}>
+                <div className="mt-12">
+                  <Eyebrow>Caractéristiques marquantes</Eyebrow>
+                  <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+                    {listing.highlights.map((h) => (
+                      <li
+                        key={h}
+                        className="flex items-start gap-3 border-t border-taupe/30 pt-4 text-charcoal"
+                      >
+                        <span className="mt-2 h-px w-5 shrink-0 bg-gilt" />
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+            )}
+          </div>
+
+          {/* Encart contact courtier */}
+          <div className="lg:col-span-5">
+            <div className="sticky top-28 border border-taupe/30 bg-sand p-8 lg:p-10">
+              <Eyebrow>Votre courtier</Eyebrow>
+              <p className="mt-6 font-display text-3xl font-light text-ink">
+                Josée-Ann Jomphe
+              </p>
+              <p className="mt-2 text-sm text-smoke">
+                Courtier immobilier agréé
+              </p>
+              <p className="mt-6 text-sm leading-relaxed text-charcoal">
+                Une question sur cette propriété ou envie d&apos;organiser une
+                visite privée ? Il me fera plaisir de vous accompagner.
+              </p>
+              <div className="mt-8 flex flex-col gap-3">
+                <ButtonLink
+                  href={`/contact?propriete=${encodeURIComponent(listing.id)}`}
+                  className="w-full justify-center"
+                >
+                  Demander une visite
+                </ButtonLink>
+                <a
+                  href="tel:+15145550142"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-ink px-8 py-4 text-[0.78rem] uppercase tracking-[0.2em] text-ink transition-colors hover:bg-ink hover:text-bone"
+                >
+                  514 555-0142
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </article>
+  );
+}

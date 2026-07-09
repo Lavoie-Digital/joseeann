@@ -1,0 +1,79 @@
+import type { Metadata } from "next";
+import { Suspense } from "react";
+import { Container, Eyebrow } from "@/components/ui";
+import { Reveal } from "@/components/motion";
+import { ContactForm } from "@/components/contact/contact-form";
+import { Mail, Phone, MapPin, Clock } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description:
+    "Prenez rendez-vous avec Josée-Ann Jomphe, courtier immobilier. Évaluation gratuite, visites privées et accompagnement sur mesure.",
+};
+
+export default function ContactPage() {
+  return (
+    <section className="bg-bone pb-24 pt-32 lg:pt-44">
+      <Container>
+        <div className="grid gap-16 lg:grid-cols-12 lg:gap-24">
+          {/* Colonne info */}
+          <div className="lg:col-span-5">
+            <Reveal>
+              <Eyebrow>Restons en contact</Eyebrow>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h1 className="mt-7 font-display text-[clamp(2.4rem,5vw,4.2rem)] font-light leading-[1.05] text-ink">
+                Parlons de votre <span className="italic text-gilt">projet</span>.
+              </h1>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="mt-6 max-w-md text-base leading-relaxed text-smoke">
+                Une question, une évaluation, l&apos;envie de visiter une
+                propriété ? Écrivez-moi et je vous reviendrai personnellement,
+                généralement en moins de 48 heures.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.3}>
+              <div className="mt-12 space-y-6">
+                {[
+                  { icon: Phone, label: "Téléphone", value: "514 555-0142", href: "tel:+15145550142" },
+                  { icon: Mail, label: "Courriel", value: "josee-ann@joseeannjomphe.ca", href: "mailto:josee-ann@joseeannjomphe.ca" },
+                  { icon: MapPin, label: "Secteur", value: "Grand Montréal & environs" },
+                  { icon: Clock, label: "Disponibilité", value: "Lun. au sam., sur rendez-vous" },
+                ].map((c) => (
+                  <div key={c.label} className="flex items-start gap-4">
+                    <span className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-taupe/40">
+                      <c.icon strokeWidth={1.3} className="h-4 w-4 text-gilt" />
+                    </span>
+                    <div>
+                      <p className="eyebrow text-clay">{c.label}</p>
+                      {c.href ? (
+                        <a href={c.href} className="mt-1 block text-charcoal transition-colors hover:text-ink">
+                          {c.value}
+                        </a>
+                      ) : (
+                        <p className="mt-1 text-charcoal">{c.value}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Colonne formulaire */}
+          <div className="lg:col-span-7">
+            <Reveal delay={0.15}>
+              <div className="border border-taupe/30 bg-bone p-8 lg:p-12">
+                <Suspense fallback={<div className="h-96" />}>
+                  <ContactForm />
+                </Suspense>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}

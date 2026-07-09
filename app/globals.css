@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/* ============================================================
+   JOSÉE-ANN JOMPHE — Courtier immobilier
+   Design system : beige neutre & noir, éditorial, haut de gamme
+   ============================================================ */
+
+:root {
+  /* Neutres chauds */
+  --bone: #f6f2ec;        /* fond principal, blanc cassé chaud */
+  --sand: #ece5da;        /* beige clair, sections */
+  --greige: #d8cdbd;      /* beige moyen */
+  --taupe: #b4a891;       /* taupe, bordures / accents doux */
+  --clay: #8a7d68;        /* texte secondaire chaud */
+
+  /* Encre */
+  --ink: #16130f;         /* noir chaud, texte principal */
+  --charcoal: #2a251f;    /* gris anthracite */
+  --smoke: #6b6155;       /* texte atténué */
+
+  /* Accent doré discret */
+  --gilt: #a8926a;
+
+  --background: var(--bone);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-bone: var(--bone);
+  --color-sand: var(--sand);
+  --color-greige: var(--greige);
+  --color-taupe: var(--taupe);
+  --color-clay: var(--clay);
+  --color-ink: var(--ink);
+  --color-charcoal: var(--charcoal);
+  --color-smoke: var(--smoke);
+  --color-gilt: var(--gilt);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-jost);
+
+  --tracking-luxe: 0.25em;
+}
+
+* {
+  border-color: color-mix(in srgb, var(--taupe) 40%, transparent);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Titres éditoriaux */
+.font-display {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+/* Petites capitales espacées (style étiquette luxe) */
+.eyebrow {
+  font-family: var(--font-jost), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
+/* Sélection */
+::selection {
+  background: var(--ink);
+  color: var(--bone);
+}
+
+/* Scrollbar discrète */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--sand); }
+::-webkit-scrollbar-thumb {
+  background: var(--taupe);
+  border-radius: 999px;
+  border: 3px solid var(--sand);
+}
+
+/* Trait décoratif */
+.hairline {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in srgb, var(--taupe) 70%, transparent),
+    transparent
+  );
+}
+
+/* Léger grain / respiration sur images */
+.img-warm {
+  filter: saturate(0.92) contrast(1.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
