@@ -244,13 +244,36 @@ export const demoListings: Listing[] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* Accès aux données (async pour refléter une future source distante) */
+/* Accès aux données                                                   */
 /* ------------------------------------------------------------------ */
+
+import { cache } from "react";
+import { syncFromCentris } from "./centris";
+
+/**
+ * Source de vérité des inscriptions affichées sur le site.
+ *
+ * En production, on interroge le flux Centris/DDF (inscriptions ACTIVES
+ * du courtier uniquement). Si le flux n'est pas configuré, on retombe sur
+ * les données de démonstration. Mémoïsé par requête (`react/cache`) pour
+ * éviter les appels multiples au flux dans un même rendu.
+ */
+export const loadListings = cache(async (): Promise<Listing[]> => {
+  try {
+    const live = await syncFromCentris();
+    if (live && live.length > 0) return live;
+  } catch (err) {
+    // En cas d'indisponibilité du flux, on n'affiche pas une page vide :
+    // on bascule sur les données de démo et on journalise l'incident.
+    console.error("[centris] Synchronisation échouée, fallback démo :", err);
+  }
+  return demoListings;
+});
 
 export async function getListings(filter?: {
   category?: ListingCategory;
 }): Promise<Listing[]> {
-  let items = [...demoListings];
+  let items = await loadListings();
   if (filter?.category) {
     items = items.filter((l) => l.category === filter.category);
   }
@@ -258,16 +281,18 @@ export async function getListings(filter?: {
 }
 
 export async function getFeaturedListings(limit = 3): Promise<Listing[]> {
-  const items = demoListings
+  const items = await loadListings();
+  const sorted = items
     .filter((l) => l.status === "en-vedette")
-    .concat(demoListings.filter((l) => l.status !== "en-vedette"));
-  return items.slice(0, limit);
+    .concat(items.filter((l) => l.status !== "en-vedette"));
+  return sorted.slice(0, limit);
 }
 
 export async function getListingBySlug(
   slug: string
 ): Promise<Listing | undefined> {
-  return demoListings.find((l) => l.slug === slug);
+  const items = await loadListings();
+  return items.find((l) => l.slug === slug);
 }
 
 export function formatPrice(value: number): string {

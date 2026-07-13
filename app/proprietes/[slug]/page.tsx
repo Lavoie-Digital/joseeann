@@ -5,7 +5,7 @@ import { Container, ButtonLink, Eyebrow } from "@/components/ui";
 import { Reveal } from "@/components/motion";
 import { Gallery } from "@/components/proprietes/gallery";
 import {
-  demoListings,
+  getListings,
   getListingBySlug,
   formatPrice,
   formatArea,
@@ -21,8 +21,9 @@ import {
   LandPlot,
 } from "lucide-react";
 
-export function generateStaticParams() {
-  return demoListings.map((l) => ({ slug: l.slug }));
+export async function generateStaticParams() {
+  const listings = await getListings();
+  return listings.map((l) => ({ slug: l.slug }));
 }
 
 export async function generateMetadata({
