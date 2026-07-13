@@ -5,7 +5,6 @@ import { Container, ButtonLink, Eyebrow } from "@/components/ui";
 import { Reveal } from "@/components/motion";
 import { Gallery } from "@/components/proprietes/gallery";
 import {
-  getListings,
   getListingBySlug,
   formatPrice,
   formatArea,
@@ -22,10 +21,12 @@ import {
   ExternalLink,
 } from "lucide-react";
 
-export async function generateStaticParams() {
-  const listings = await getListings();
-  return listings.map((l) => ({ slug: l.slug }));
-}
+// Le flux Centris évolue (nouvelles inscriptions, changements de statut) et
+// n'est pas toujours accessible au moment du build. On rend donc la fiche à la
+// demande, côté serveur, plutôt que de figer la liste des pages au build — ce
+// qui évitait les 404 sur les inscriptions apparues (ou modifiées) après coup.
+// Les données restent mises en cache via `revalidate` dans `syncFromCentris`.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,

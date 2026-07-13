@@ -109,7 +109,9 @@ export function ButtonLink({
   const styles = {
     solid: "bg-ink text-bone hover:bg-charcoal",
     outline: "border border-ink text-ink hover:bg-ink hover:text-bone",
-    ghost: "text-ink hover:text-gilt",
+    // La couleur du texte est laissée à `className` (fonds clairs ou sombres)
+    // afin d'éviter tout conflit de classes Tailwind.
+    ghost: "",
   }[variant];
   return (
     <Link href={href} className={`${base} ${styles} ${className}`}>
