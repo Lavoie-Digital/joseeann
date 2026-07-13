@@ -250,6 +250,10 @@ export function normalizeListing(raw: RawCentrisListing): Listing {
     description: raw.PublicRemarks?.trim() || buildDescription(raw),
     highlights: buildHighlights(raw),
     images: images.length > 0 ? images : [PLACEHOLDER_IMAGE],
+    // Lien vers la fiche publique Centris.ca (et non la passerelle de la
+    // bannière fournie par `ListingURL`). Centris redirige ce format vers
+    // l'URL canonique de l'inscription.
+    centrisUrl: `https://www.centris.ca/fr/propriete/${raw.ListingId}`,
     updatedAt: raw.ModificationTimestamp ?? new Date().toISOString(),
   };
 }

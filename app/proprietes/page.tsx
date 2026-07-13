@@ -6,7 +6,7 @@ import { getListings } from "@/lib/listings";
 export const metadata: Metadata = {
   title: "Propriétés",
   description:
-    "Découvrez notre sélection de propriétés résidentielles et commerciales d'exception, synchronisée avec Centris®.",
+    "Découvrez les propriétés résidentielles et commerciales que représente Josée-Ann Jomphe au Saguenay–Lac-Saint-Jean, mises à jour automatiquement avec Centris®.",
 };
 
 export default async function ProprietesPage() {
@@ -18,10 +18,11 @@ export default async function ProprietesPage() {
         eyebrow="Portefeuille"
         title={
           <>
-            Propriétés <span className="italic text-gilt">d&apos;exception</span>
+            Des propriétés pour tous les{" "}
+            <span className="italic text-gilt">projets de vie</span>
           </>
         }
-        subtitle="Une sélection rigoureuse de propriétés résidentielles et commerciales, mise à jour automatiquement au fil des inscriptions Centris®."
+        subtitle="Découvrez les propriétés que je représente actuellement au Saguenay. Qu'il s'agisse de votre première maison, d'un investissement ou d'un nouveau chapitre, chaque inscription mérite d'être découverte."
         image="/images/listing-6.jpg"
       />
 

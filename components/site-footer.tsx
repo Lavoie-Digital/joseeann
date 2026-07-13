@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, Phone } from "lucide-react";
 
 function FacebookIcon({ className }: { className?: string }) {
@@ -19,6 +20,14 @@ function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
+function TikTokIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d="M16.5 3c.3 2.1 1.5 3.5 3.5 3.7v2.3c-1.2.1-2.4-.2-3.5-.8v5.9c0 3-2.1 5.1-5 5.1-2.7 0-4.8-1.9-4.8-4.7 0-2.9 2.4-4.9 5.4-4.6v2.4c-.4-.1-.9-.2-1.3-.1-1.1.1-1.9 1-1.8 2.3.1 1.2 1 2 2.1 2 1.3 0 2.2-1 2.2-2.6V3h2.7Z" />
+    </svg>
+  );
+}
+
 export function SiteFooter() {
   const year = 2026;
   return (
@@ -29,15 +38,32 @@ export function SiteFooter() {
           <div className="lg:col-span-2">
             <p className="font-display text-4xl font-light tracking-wide">
               Josée-Ann Jomphe
+              <span className="ml-1 text-lg text-taupe">inc.</span>
             </p>
             <p className="eyebrow mt-3 text-taupe">
-              Courtier immobilier · Résidentiel &amp; Commercial
+              Courtier immobilier résidentiel et commercial
             </p>
             <p className="mt-6 max-w-md text-sm leading-relaxed text-bone/60">
-              Un accompagnement discret et sur mesure pour vendre et acquérir
-              des propriétés d&apos;exception. La rigueur d&apos;une
-              professionnelle, la sensibilité d&apos;une passionnée.
+              Un accompagnement humain et rigoureux pour vendre, acheter et
+              investir au Saguenay–Lac-Saint-Jean. Des relations de confiance,
+              autant que des résultats.
             </p>
+            <div className="mt-8 flex items-center gap-4">
+              <Image
+                src="/viacapital.webp"
+                alt="Via Capitale Saguenay–Lac-Saint-Jean, agence immobilière"
+                width={1600}
+                height={1599}
+                className="h-20 w-20"
+              />
+              <p className="text-xs uppercase leading-relaxed tracking-[0.18em] text-bone/45">
+                Via Capitale
+                <br />
+                Agence immobilière
+                <br />
+                Saguenay–Lac-Saint-Jean
+              </p>
+            </div>
           </div>
 
           {/* Navigation */}
@@ -46,7 +72,9 @@ export function SiteFooter() {
             <ul className="mt-6 space-y-3 text-sm text-bone/70">
               {[
                 { href: "/proprietes", label: "Propriétés" },
-                { href: "/guides", label: "Guides & art de vivre" },
+                { href: "/vendre-acheter", label: "Vendre & acheter" },
+                { href: "/conseils", label: "Conseils" },
+                { href: "/#faq", label: "FAQ" },
                 { href: "/a-propos", label: "À propos" },
                 { href: "/contact", label: "Contact" },
               ].map((l) => (
@@ -68,20 +96,20 @@ export function SiteFooter() {
             <ul className="mt-6 space-y-4 text-sm text-bone/70">
               <li>
                 <a
-                  href="tel:+15145550142"
+                  href="tel:+15813061902"
                   className="flex items-center gap-3 transition-colors hover:text-bone"
                 >
                   <Phone strokeWidth={1.4} className="h-4 w-4 text-gilt" />
-                  514 555-0142
+                  581 306-1902
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:josee-ann@joseeannjomphe.ca"
+                  href="mailto:info@jajomphe.ca"
                   className="flex items-center gap-3 transition-colors hover:text-bone"
                 >
                   <Mail strokeWidth={1.4} className="h-4 w-4 text-gilt" />
-                  josee-ann@joseeannjomphe.ca
+                  info@jajomphe.ca
                 </a>
               </li>
             </ul>
@@ -96,7 +124,7 @@ export function SiteFooter() {
                 <FacebookIcon className="h-4 w-4" />
               </a>
               <a
-                href="https://www.instagram.com"
+                href="https://www.instagram.com/joseeann.immobilier"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
@@ -104,14 +132,24 @@ export function SiteFooter() {
               >
                 <InstagramIcon className="h-4 w-4" />
               </a>
+              <a
+                href="https://www.tiktok.com/@joseeann.jomphe"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-bone/25 transition-colors hover:border-gilt hover:text-gilt"
+              >
+                <TikTokIcon className="h-4 w-4" />
+              </a>
             </div>
           </div>
         </div>
 
         <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-bone/15 pt-8 text-xs text-bone/45 md:flex-row md:items-center">
-          <p>© {year} Josée-Ann Jomphe. Tous droits réservés.</p>
+          <p>© {year} Josée-Ann Jomphe inc. Tous droits réservés.</p>
           <p className="tracking-wide">
-            Courtier immobilier agréé · Membre de l&apos;OACIQ
+            Courtier immobilier résidentiel et commercial · Membre de
+            l&apos;OACIQ · Permis OACIQ H6362
           </p>
         </div>
       </div>

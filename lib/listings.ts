@@ -40,6 +40,8 @@ export interface Listing {
   highlights: string[];
   /** Première image = image de couverture */
   images: string[];
+  /** Lien vers la fiche publique Centris (passerelle) */
+  centrisUrl?: string;
   /** Date de mise à jour (ISO) — provenant du flux */
   updatedAt: string;
 }

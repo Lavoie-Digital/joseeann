@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Container, Eyebrow, ButtonLink } from "@/components/ui";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
-import { Quote, Gem, HandHeart, Compass, ShieldCheck } from "lucide-react";
+import { Quote, Ear, Route, MessageCircle, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "À propos",
@@ -11,10 +11,18 @@ export const metadata: Metadata = {
 };
 
 const VALUES = [
-  { icon: Gem, title: "Excellence", text: "Un souci du détail qui se lit dans chaque photo, chaque visite, chaque négociation." },
-  { icon: HandHeart, title: "Écoute", text: "Vos objectifs guident chaque décision. Aucun projet n'est traité comme un autre." },
-  { icon: ShieldCheck, title: "Intégrité", text: "Transparence totale et conseils honnêtes, même quand ils ne sont pas les plus faciles." },
-  { icon: Compass, title: "Vision", text: "Une lecture fine du marché pour saisir le bon moment et la juste valeur." },
+  { icon: Ear, title: "Une écoute attentive", text: "Je prends le temps de comprendre vos besoins, vos objectifs et votre réalité afin de vous offrir des conseils adaptés à votre situation." },
+  { icon: Route, title: "Une stratégie personnalisée", text: "Aucune transaction ne se ressemble. Ensemble, nous mettons en place un plan d'action pensé pour atteindre vos objectifs." },
+  { icon: MessageCircle, title: "Une communication claire", text: "Vous êtes informé à chaque étape du processus. Une bonne décision se prend lorsqu'on comprend bien toutes les options qui s'offrent à nous." },
+  { icon: ShieldCheck, title: "Une défense de vos intérêts", text: "Que ce soit lors des négociations ou des décisions importantes, je veille toujours à protéger vos intérêts avec professionnalisme et intégrité." },
+];
+
+const BIO = [
+  { title: "Pourquoi j'ai choisi l'immobilier", text: "J'aime les projets qui ont un impact dans la vie des gens. Derrière chaque transaction se cache une histoire, un changement ou un nouveau départ, et c'est ce qui me motive à exercer ce métier avec autant de passion." },
+  { title: "Ma façon de travailler", text: "Je privilégie une approche simple : bien écouter, bien préparer et bien conseiller. Chaque décision est réfléchie, chaque stratégie est adaptée et chaque détail est pris en compte afin que vous puissiez avancer en toute confiance." },
+  { title: "Ce qui me distingue", text: "Je ne cherche pas à multiplier les transactions, mais à offrir une expérience de qualité. Être disponible, répondre à vos questions, anticiper les défis et défendre vos intérêts font partie intégrante de mon rôle." },
+  { title: "Au-delà de la transaction", text: "Pour moi, vendre ou acheter une propriété ne se résume jamais à une signature chez le notaire. C'est souvent le début d'un nouveau chapitre, et je considère comme un privilège de pouvoir accompagner mes clients dans ces moments importants." },
+  { title: "Ce qui me rend le plus fière", text: "Les recommandations de mes clients sont ma plus grande récompense. Savoir qu'ils ont apprécié leur expérience au point de me confier un nouveau projet ou de parler de moi à leurs proches est une marque de confiance que je ne prends jamais pour acquise." },
 ];
 
 export default function AProposPage() {
@@ -29,21 +37,16 @@ export default function AProposPage() {
                 <Eyebrow>Votre courtier</Eyebrow>
                 <h1 className="mt-7 font-display text-[clamp(2.6rem,6vw,5rem)] font-light leading-[1.03] text-ink">
                   Josée-Ann Jomphe
+                  <span className="ml-2 text-2xl text-clay">inc.</span>
                 </h1>
                 <p className="mt-3 text-lg text-clay">
-                  Courtier immobilier agréé · Résidentiel &amp; Commercial
+                  Courtier immobilier résidentiel et commercial
                 </p>
                 <p className="mt-8 max-w-xl text-lg leading-relaxed text-charcoal">
-                  Depuis plus de douze ans, j&apos;accompagne des propriétaires
-                  et des acquéreurs exigeants à travers ce que la vie a de plus
-                  précieux : le lieu que l&apos;on habite, l&apos;actif que
-                  l&apos;on bâtit.
-                </p>
-                <p className="mt-5 max-w-xl text-base leading-relaxed text-smoke">
-                  Mon approche est simple : moins de bruit, plus de justesse. Une
-                  disponibilité réelle, une mise en marché soignée et une
-                  négociation menée avec fermeté et élégance — pour que chaque
-                  transaction se vive sereinement.
+                  Courtier immobilier résidentiel et commercial au
+                  Saguenay–Lac-Saint-Jean, j&apos;accompagne mes clients depuis
+                  plus de cinq ans avec une approche profondément humaine, où la
+                  confiance compte autant que les résultats.
                 </p>
                 <div className="mt-10">
                   <ButtonLink href="/contact">Me contacter</ButtonLink>
@@ -52,33 +55,57 @@ export default function AProposPage() {
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="relative">
-                <div className="relative aspect-[4/5] overflow-hidden">
-                  <Image
-                    src="/Photo courtiere.jpg"
-                    alt="Josée-Ann Jomphe"
-                    fill
-                    priority
-                    sizes="(max-width: 1024px) 100vw, 45vw"
-                    className="img-warm object-cover"
-                  />
-                </div>
-                <div className="absolute -bottom-6 -left-6 hidden h-32 w-32 border border-gilt/50 lg:block" />
+              <div className="relative aspect-[4/5] overflow-hidden">
+                <Image
+                  src="/courtiere.jpg"
+                  alt="Josée-Ann Jomphe"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  className="img-warm object-cover object-top"
+                />
               </div>
             </Reveal>
           </div>
         </Container>
       </section>
 
+      {/* Mon approche — biographie en sections */}
+      <section className="bg-bone pt-24 lg:pt-32">
+        <Container>
+          <div className="max-w-2xl">
+            <Reveal>
+              <Eyebrow>Faire connaissance</Eyebrow>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="mt-6 font-display text-[clamp(2rem,4vw,3.4rem)] font-light leading-tight text-ink">
+                Mon approche, en quelques mots.
+              </h2>
+            </Reveal>
+          </div>
+          <Stagger className="mt-14 grid gap-x-12 gap-y-10 md:grid-cols-2">
+            {BIO.map((b) => (
+              <StaggerItem key={b.title}>
+                <div className="border-t border-taupe/40 pt-6">
+                  <h3 className="font-display text-2xl font-light text-ink">
+                    {b.title}
+                  </h3>
+                  <p className="mt-4 leading-relaxed text-charcoal">{b.text}</p>
+                </div>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </Container>
+      </section>
+
       {/* Chiffres */}
       <section className="mt-24 border-y border-taupe/25 bg-sand py-16 lg:mt-32">
         <Container>
-          <Stagger className="grid grid-cols-2 gap-y-10 lg:grid-cols-4">
+          <Stagger className="grid grid-cols-2 gap-y-10 lg:grid-cols-3">
             {[
-              { v: "150 M$+", l: "en transactions" },
-              { v: "300+", l: "familles accompagnées" },
-              { v: "12 ans", l: "d'expérience" },
-              { v: "98 %", l: "de clients fidèles" },
+              { v: "45 M$+", l: "en transactions" },
+              { v: "175+", l: "familles accompagnées" },
+              { v: "5 ans+", l: "d'expérience" },
             ].map((s) => (
               <StaggerItem key={s.l} className="text-center">
                 <p className="font-display text-[clamp(2.2rem,4vw,3.4rem)] font-light text-ink">
@@ -96,11 +123,11 @@ export default function AProposPage() {
         <Container>
           <div className="max-w-2xl">
             <Reveal>
-              <Eyebrow>Ce qui me guide</Eyebrow>
+              <Eyebrow>Mon engagement</Eyebrow>
             </Reveal>
             <Reveal delay={0.1}>
               <h2 className="mt-6 font-display text-[clamp(2rem,4vw,3.4rem)] font-light leading-tight text-ink">
-                Quatre valeurs, une même exigence.
+                Ce que vous pouvez attendre de moi.
               </h2>
             </Reveal>
           </div>
@@ -139,9 +166,10 @@ export default function AProposPage() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mx-auto mt-8 max-w-4xl font-display text-[clamp(1.8rem,3.6vw,3rem)] font-light italic leading-[1.3]">
-              « Une belle transaction, ce n&apos;est pas seulement un prix. C&apos;est
-              la certitude d&apos;avoir été bien accompagné, du premier café à la
-              remise des clés.{" »"}
+              « Derrière chaque transaction se cache une histoire, un projet de
+              vie ou un nouveau départ. C&apos;est ce qui rend mon métier aussi
+              passionnant et ce qui me motive à offrir un accompagnement à la
+              fois humain et rigoureux.{" »"}
             </p>
           </Reveal>
           <Reveal delay={0.2}>

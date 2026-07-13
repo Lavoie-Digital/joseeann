@@ -19,26 +19,29 @@ const jost = Jost({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://joseeannjomphe.ca"),
+  metadataBase: new URL("https://jajomphe.ca"),
   title: {
-    default: "Josée-Ann Jomphe · Courtier immobilier haut de gamme",
+    default:
+      "Josée-Ann Jomphe · Courtier immobilier résidentiel et commercial au Saguenay",
     template: "%s · Josée-Ann Jomphe",
   },
   description:
-    "Courtage immobilier résidentiel et commercial haut de gamme. Une approche épurée, discrète et sur mesure pour vendre et acquérir des propriétés d'exception.",
+    "Josée-Ann Jomphe, courtier immobilier résidentiel et commercial au Saguenay–Lac-Saint-Jean. Un accompagnement humain et rigoureux pour vendre, acheter et investir.",
   keywords: [
     "courtier immobilier",
-    "immobilier de prestige",
-    "propriétés de luxe",
+    "Saguenay",
+    "Lac-Saint-Jean",
     "résidentiel",
     "commercial",
+    "Via Capitale",
     "Québec",
     "Josée-Ann Jomphe",
   ],
   openGraph: {
-    title: "Josée-Ann Jomphe · Courtier immobilier haut de gamme",
+    title:
+      "Josée-Ann Jomphe · Courtier immobilier résidentiel et commercial au Saguenay",
     description:
-      "Courtage immobilier résidentiel et commercial haut de gamme. Une approche épurée, discrète et sur mesure.",
+      "Un accompagnement humain et rigoureux pour vendre, acheter et investir au Saguenay–Lac-Saint-Jean.",
     type: "website",
     locale: "fr_CA",
   },

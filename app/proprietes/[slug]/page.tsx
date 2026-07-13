@@ -19,6 +19,7 @@ import {
   MapPin,
   ArrowLeft,
   LandPlot,
+  ExternalLink,
 } from "lucide-react";
 
 export async function generateStaticParams() {
@@ -176,9 +177,10 @@ export default async function ListingPage({
               <Eyebrow>Votre courtier</Eyebrow>
               <p className="mt-6 font-display text-3xl font-light text-ink">
                 Josée-Ann Jomphe
+                <span className="ml-1 text-base text-clay">inc.</span>
               </p>
               <p className="mt-2 text-sm text-smoke">
-                Courtier immobilier agréé
+                Courtier immobilier résidentiel et commercial
               </p>
               <p className="mt-6 text-sm leading-relaxed text-charcoal">
                 Une question sur cette propriété ou envie d&apos;organiser une
@@ -192,12 +194,24 @@ export default async function ListingPage({
                   Demander une visite
                 </ButtonLink>
                 <a
-                  href="tel:+15145550142"
+                  href="tel:+15813061902"
                   className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-ink px-8 py-4 text-[0.78rem] uppercase tracking-[0.2em] text-ink transition-colors hover:bg-ink hover:text-bone"
                 >
-                  514 555-0142
+                  581 306-1902
                 </a>
               </div>
+
+              {listing.centrisUrl && (
+                <a
+                  href={listing.centrisUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.18em] text-clay transition-colors hover:text-ink"
+                >
+                  Voir la fiche complète sur Centris
+                  <ExternalLink strokeWidth={1.4} className="h-3.5 w-3.5" />
+                </a>
+              )}
             </div>
           </div>
         </div>

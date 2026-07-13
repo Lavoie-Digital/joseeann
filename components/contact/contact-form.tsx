@@ -15,9 +15,18 @@ const SUBJECTS = [
   "Autre demande",
 ];
 
+const SUBJECT_BY_PARAM: Record<string, string> = {
+  vendre: "Vendre une propriété",
+  acheter: "Acheter une propriété",
+  evaluation: "Évaluation gratuite",
+  commercial: "Investissement commercial",
+};
+
 export function ContactForm() {
   const params = useSearchParams();
   const propertyRef = params.get("propriete") ?? "";
+  const defaultSubject =
+    SUBJECT_BY_PARAM[params.get("sujet") ?? ""] ?? SUBJECTS[0];
 
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -70,7 +79,7 @@ export function ContactForm() {
         </h3>
         <p className="mt-4 max-w-md text-smoke">
           Votre demande a bien été reçue. Josée-Ann vous reviendra
-          personnellement, généralement en moins de 48 heures. Un courriel de
+          personnellement, généralement en moins de 24 heures. Un courriel de
           confirmation vient de vous être envoyé.
         </p>
         <button
@@ -122,7 +131,7 @@ export function ContactForm() {
         </div>
         <div>
           <label className="eyebrow text-clay">Sujet</label>
-          <select name="subject" defaultValue={SUBJECTS[0]} className={`mt-2 ${inputCls}`}>
+          <select name="subject" defaultValue={defaultSubject} className={`mt-2 ${inputCls}`}>
             {SUBJECTS.map((s) => (
               <option key={s} value={s}>
                 {s}

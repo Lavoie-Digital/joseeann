@@ -10,7 +10,8 @@ import { Menu, X } from "lucide-react";
 const NAV = [
   { href: "/", label: "Accueil" },
   { href: "/proprietes", label: "Propriétés" },
-  { href: "/guides", label: "Guides & art de vivre" },
+  { href: "/vendre-acheter", label: "Vendre & acheter" },
+  { href: "/conseils", label: "Conseils" },
   { href: "/a-propos", label: "À propos" },
 ];
 
@@ -37,7 +38,10 @@ export function SiteHeader() {
 
   // Pages dont le hero est sombre (image plein écran) au sommet.
   const darkHero =
-    pathname === "/" || pathname === "/proprietes" || pathname === "/guides";
+    pathname === "/" ||
+    pathname === "/proprietes" ||
+    pathname === "/conseils" ||
+    pathname === "/vendre-acheter";
   const light = darkHero && !scrolled;
 
   return (
@@ -55,17 +59,17 @@ export function SiteHeader() {
           <Link href="/" className="relative z-10 flex items-center gap-3">
             <Image
               src={light ? "/logo-mark-light.png" : "/logo-mark.png"}
-              alt="Josée-Ann Jomphe — Courtier immobilier"
-              width={140}
-              height={64}
+              alt="Josée-Ann Jomphe inc. — Courtier immobilier résidentiel et commercial"
+              width={729}
+              height={536}
               priority
               className={`w-auto transition-all duration-500 ${
-                scrolled ? "h-11" : "h-14"
+                scrolled ? "h-12" : "h-16"
               }`}
             />
           </Link>
 
-          <nav className="hidden items-center gap-10 lg:flex">
+          <nav className="hidden items-center gap-x-8 lg:flex xl:gap-x-10">
             {NAV.map((item) => {
               const active =
                 item.href === "/"

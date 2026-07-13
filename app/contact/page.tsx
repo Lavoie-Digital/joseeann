@@ -28,19 +28,20 @@ export default function ContactPage() {
             </Reveal>
             <Reveal delay={0.2}>
               <p className="mt-6 max-w-md text-base leading-relaxed text-smoke">
-                Une question, une évaluation, l&apos;envie de visiter une
-                propriété ? Écrivez-moi et je vous reviendrai personnellement,
-                généralement en moins de 48 heures.
+                Chaque grand projet commence par une simple conversation.
+                Écrivez-moi et voyons ensemble comment je peux vous aider à
+                réaliser le vôtre — je vous reviens personnellement, généralement
+                en moins de 24 heures.
               </p>
             </Reveal>
 
             <Reveal delay={0.3}>
               <div className="mt-12 space-y-6">
                 {[
-                  { icon: Phone, label: "Téléphone", value: "514 555-0142", href: "tel:+15145550142" },
-                  { icon: Mail, label: "Courriel", value: "josee-ann@joseeannjomphe.ca", href: "mailto:josee-ann@joseeannjomphe.ca" },
-                  { icon: MapPin, label: "Secteur", value: "Grand Montréal & environs" },
-                  { icon: Clock, label: "Disponibilité", value: "Lun. au sam., sur rendez-vous" },
+                  { icon: Phone, label: "Téléphone", value: "581 306-1902", href: "tel:+15813061902" },
+                  { icon: Mail, label: "Courriel", value: "info@jajomphe.ca", href: "mailto:info@jajomphe.ca" },
+                  { icon: MapPin, label: "Secteur", value: "Saguenay–Lac-Saint-Jean" },
+                  { icon: Clock, label: "Disponibilité", value: "7 jours sur 7, de 8 h à 20 h" },
                 ].map((c) => (
                   <div key={c.label} className="flex items-start gap-4">
                     <span className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-taupe/40">

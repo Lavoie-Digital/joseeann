@@ -93,26 +93,17 @@ export function Hero() {
 
       {/* Contenu centré */}
       <div className="relative z-10 flex flex-col items-center px-6 pt-20 text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: EASE, delay: 0.3 }}
-          className="eyebrow text-bone/80"
-        >
-          Courtier immobilier · Résidentiel &amp; Commercial
-        </motion.p>
-
         <motion.div
           initial={{ opacity: 0, y: 28, scale: 0.94 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1.5, ease: EASE, delay: 0.45 }}
-          className="mt-8 w-[min(72vw,420px)] drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
+          className="w-[min(72vw,440px)] drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
         >
           <Image
             src="/logo-mark-light.png"
-            alt="Josée-Ann Jomphe — Courtier immobilier"
-            width={524}
-            height={486}
+            alt="Josée-Ann Jomphe inc. — Courtier immobilier résidentiel et commercial"
+            width={729}
+            height={536}
             priority
             className="h-auto w-full"
           />
@@ -131,20 +122,33 @@ export function Hero() {
           transition={{ duration: 1, ease: EASE, delay: 1.15 }}
           className="mt-8 max-w-2xl font-display text-[clamp(1.8rem,3.6vw,3rem)] font-light leading-[1.2] text-bone"
         >
-          L&apos;immobilier d&apos;exception mérite une signature.
+          Au-delà de l&apos;immobilier, il y a des décisions qui changent une
+          vie.
         </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: EASE, delay: 1.25 }}
+          className="mt-7 max-w-2xl text-base leading-relaxed text-bone/80"
+        >
+          Je suis Josée-Ann Jomphe, courtier immobilier résidentiel et
+          commercial au Saguenay. Depuis plus de 5 ans, j&apos;accompagne mes
+          clients avec une approche où les relations humaines sont aussi
+          importantes que les résultats.
+        </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: EASE, delay: 1.3 }}
+          transition={{ duration: 1, ease: EASE, delay: 1.4 }}
           className="mt-11 flex flex-wrap items-center justify-center gap-4"
         >
           <Link
             href="/proprietes"
             className="group inline-flex items-center gap-2.5 rounded-full bg-bone px-8 py-4 text-[0.78rem] uppercase tracking-[0.2em] text-ink transition-all duration-300 hover:bg-gilt hover:text-bone"
           >
-            Découvrir les propriétés
+            Explorer les propriétés
             <ArrowUpRight
               strokeWidth={1.5}
               className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -154,7 +158,7 @@ export function Hero() {
             href="/contact"
             className="inline-flex items-center gap-2.5 rounded-full border border-bone/60 px-8 py-4 text-[0.78rem] uppercase tracking-[0.2em] text-bone transition-all duration-300 hover:border-bone hover:bg-bone/10"
           >
-            Prendre rendez-vous
+            Découvrir la valeur marchande de votre propriété
           </Link>
         </motion.div>
       </div>

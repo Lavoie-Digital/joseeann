@@ -70,8 +70,8 @@ export async function POST(req: Request) {
   }
 
   const apiKey = process.env.SENDGRID_API_KEY;
-  const to = process.env.CONTACT_TO ?? "josee-ann@joseeannjomphe.ca";
-  const from = process.env.CONTACT_FROM ?? "site@joseeannjomphe.ca";
+  const to = process.env.CONTACT_TO ?? "jajomphe@hotmail.com";
+  const from = process.env.CONTACT_FROM ?? "info@jajomphe.ca";
 
   // Mode démo : pas de clé configurée → on simule un succès.
   if (!apiKey) {
@@ -117,16 +117,16 @@ export async function POST(req: Request) {
     to: { email, name },
     from: { email: from, name: "Josée-Ann Jomphe" },
     subject: "Merci — votre message a bien été reçu",
-    text: `Bonjour ${name},\n\nMerci pour votre message. Je vous reviendrai personnellement dans les plus brefs délais, généralement en moins de 48 heures.\n\nAu plaisir,\nJosée-Ann Jomphe\nCourtier immobilier agréé`,
+    text: `Bonjour ${name},\n\nMerci pour votre message. Je vous reviendrai personnellement dans les plus brefs délais, généralement en moins de 24 heures.\n\nAu plaisir,\nJosée-Ann Jomphe inc.\nCourtier immobilier résidentiel et commercial`,
     html: `
       <div style="font-family:Georgia,serif;color:#16130f;max-width:560px;line-height:1.6">
         <p>Bonjour ${escapeHtml(name)},</p>
         <p>Merci pour votre message. Je vous reviendrai personnellement dans les
-        plus brefs délais, généralement en moins de 48 heures.</p>
+        plus brefs délais, généralement en moins de 24 heures.</p>
         <p>D'ici là, n'hésitez pas à parcourir mes propriétés en vedette.</p>
         <p style="margin-top:24px">Au plaisir,<br/>
-        <strong style="font-size:18px">Josée-Ann Jomphe</strong><br/>
-        <span style="color:#8a7d68">Courtier immobilier agréé</span></p>
+        <strong style="font-size:18px">Josée-Ann Jomphe inc.</strong><br/>
+        <span style="color:#8a7d68">Courtier immobilier résidentiel et commercial</span></p>
       </div>`,
   };
 
