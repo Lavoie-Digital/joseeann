@@ -40,11 +40,13 @@ export function PageHero({
   title,
   subtitle,
   image,
+  imagePosition = "center",
 }: {
   eyebrow: string;
   title: ReactNode;
   subtitle?: string;
   image?: string;
+  imagePosition?: string;
 }) {
   if (image) {
     return (
@@ -55,6 +57,7 @@ export function PageHero({
           fill
           priority
           sizes="100vw"
+          style={{ objectPosition: imagePosition }}
           className="img-warm object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/45 to-ink/45" />
