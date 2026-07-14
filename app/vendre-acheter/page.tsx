@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container, Eyebrow, ButtonLink, PageHero } from "@/components/ui";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
+import { SoldMarquee } from "@/components/sold-marquee";
 import {
   ClipboardList,
   Home,
@@ -105,23 +106,8 @@ export default function VendreAcheterPage() {
         image="/images/listing-1.jpg"
       />
 
-      {/* Ancres de navigation fluide */}
-      <section className="sticky top-0 z-30 border-b border-taupe/25 bg-bone/85 backdrop-blur-md">
-        <Container className="flex items-center justify-center gap-3 py-4">
-          <a
-            href="#vendre"
-            className="rounded-full border border-taupe/50 px-6 py-2.5 text-[0.75rem] uppercase tracking-[0.18em] text-charcoal transition-colors hover:border-ink hover:text-ink"
-          >
-            Je vends
-          </a>
-          <a
-            href="#acheter"
-            className="rounded-full border border-taupe/50 px-6 py-2.5 text-[0.75rem] uppercase tracking-[0.18em] text-charcoal transition-colors hover:border-ink hover:text-ink"
-          >
-            J&apos;achète
-          </a>
-        </Container>
-      </section>
+      {/* Mosaïque défilante des ventes récentes */}
+      <SoldMarquee />
 
       {/* VENDRE */}
       <section id="vendre" className="scroll-mt-20 bg-bone py-24 lg:py-32">

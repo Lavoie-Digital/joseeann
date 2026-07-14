@@ -8,14 +8,19 @@ import { ArrowUpRight } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const SLIDES = [
-  "/images/hero-estate.jpg",
-  "/images/listing-1.jpg",
-  "/images/interior-1.jpg",
-  "/images/listing-3.jpg",
-  "/images/kitchen-1.jpg",
-  "/images/listing-6.jpg",
+const SLIDES_DESKTOP = [
+  "/carousel-pc1.jpg",
+  "/carousel-pc2.jpg",
+  "/carousel-pc3.jpg",
 ];
+
+const SLIDES_MOBILE = [
+  "/carousel-mobile1.jpg",
+  "/carousel-mobile2.jpg",
+  "/carousel-mobile3.jpg",
+];
+
+const SLIDE_COUNT = SLIDES_DESKTOP.length;
 
 export function Hero() {
   const [i, setI] = useState(0);
@@ -23,7 +28,7 @@ export function Hero() {
 
   useEffect(() => {
     if (reduce) return;
-    const t = setInterval(() => setI((n) => (n + 1) % SLIDES.length), 5000);
+    const t = setInterval(() => setI((n) => (n + 1) % SLIDE_COUNT), 5000);
     return () => clearInterval(t);
   }, [reduce]);
 
@@ -42,13 +47,23 @@ export function Hero() {
           }}
           className="absolute inset-0"
         >
+          {/* Version mobile (téléphone) */}
           <Image
-            src={SLIDES[i]}
+            src={SLIDES_MOBILE[i]}
             alt=""
             fill
             priority
             sizes="100vw"
-            className="img-warm object-cover"
+            className="img-warm object-cover md:hidden"
+          />
+          {/* Version PC (ordinateur) */}
+          <Image
+            src={SLIDES_DESKTOP[i]}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="img-warm hidden object-cover md:block"
           />
         </motion.div>
       </AnimatePresence>
