@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Loader2, CheckCircle2 } from "lucide-react";
@@ -31,6 +31,8 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [message, setMessage] = useState("");
+  // Instant d'affichage du formulaire — sert au piège temporel anti-robot.
+  const mountedAt = useRef(Date.now());
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -45,7 +47,11 @@ export function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, propertyRef }),
+        body: JSON.stringify({
+          ...data,
+          propertyRef,
+          elapsedMs: Date.now() - mountedAt.current,
+        }),
       });
       const json = await res.json();
 

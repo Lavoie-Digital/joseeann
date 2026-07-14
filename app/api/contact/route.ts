@@ -4,14 +4,18 @@ import sgMail from "@sendgrid/mail";
 /**
  * Automatisation courriel via SendGrid.
  *
- * À la réception du formulaire :
- *   1. Un courriel de NOTIFICATION est envoyé à Josée-Ann.
- *   2. Un courriel de CONFIRMATION (auto-répondeur) est envoyé au visiteur.
+ * À la réception du formulaire (et si le message n'est pas détecté comme
+ * pourriel) :
+ *   1. Un courriel LEAD au format structuré est envoyé au parseur du CRM
+ *      (Parseur → AVA) pour extraction automatique des champs.
+ *   2. Un courriel de NOTIFICATION lisible est envoyé à Josée-Ann (copie).
+ *   3. Un courriel de CONFIRMATION (auto-répondeur) est envoyé au visiteur.
  *
  * Variables d'environnement (voir .env.example) :
  *   SENDGRID_API_KEY   Clé API SendGrid
  *   CONTACT_TO         Adresse de réception (courtier)
  *   CONTACT_FROM       Adresse d'envoi vérifiée dans SendGrid
+ *   CONTACT_PARSEUR    Adresse du parseur CRM (ex. ...@in.parseur.com)
  *
  * En l'absence de clé (mode démo), la requête réussit sans envoi réel.
  */
@@ -25,6 +29,8 @@ interface ContactPayload {
   propertyRef?: string;
   // Champ anti-pourriel (honeypot) : doit rester vide.
   company?: string;
+  // Temps de remplissage en ms (piège temporel anti-robot).
+  elapsedMs?: number;
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -36,6 +42,81 @@ function escapeHtml(s: string) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 }
+
+/**
+ * Score anti-pourriel. Plus le score est élevé, plus le message est suspect.
+ * Un seuil est appliqué par l'appelant : au-delà, le message est ignoré
+ * silencieusement (ni CRM, ni cliente ne le reçoivent).
+ */
+function spamScore(fields: {
+  name: string;
+  message: string;
+  elapsedMs?: number;
+}): { score: number; reasons: string[] } {
+  const { name, message, elapsedMs } = fields;
+  const reasons: string[] = [];
+  let score = 0;
+
+  const haystack = `${name} ${message}`.toLowerCase();
+
+  // Liens : rarissimes dans une vraie demande à un courtier.
+  const urls = (message.match(/https?:\/\/|www\.|\[url/gi) ?? []).length;
+  if (urls > 0) {
+    score += urls * 2;
+    reasons.push(`${urls} lien(s)`);
+  }
+
+  // Balises BBCode → quasi exclusivement des robots de spam.
+  if (/\[\/?(url|link|img|b|i)\]/i.test(message)) {
+    score += 3;
+    reasons.push("BBCode");
+  }
+
+  // Mots-clés typiques de pourriel.
+  const KEYWORDS = [
+    "seo", "backlink", "back link", "ranking", "rank higher", "guest post",
+    "crypto", "bitcoin", "forex", "casino", "viagra", "cialis", "payday",
+    "loan", "escort", "porn", "click here", "buy now", "limited offer",
+    "make money", "earn money", "work from home", "weight loss",
+    "guaranteed", "100% free", "web traffic", "заработок", "кредит",
+  ];
+  for (const k of KEYWORDS) {
+    if (haystack.includes(k)) {
+      score += 2;
+      reasons.push(`mot-clé:${k}`);
+    }
+  }
+
+  // Écritures cyrillique / CJK en masse (site FR/EN → très suspect).
+  const cyrillic = (message.match(/[Ѐ-ӿ]/g) ?? []).length;
+  const cjk = (message.match(/[　-鿿]/g) ?? []).length;
+  if (cyrillic + cjk > 10) {
+    score += 3;
+    reasons.push("écriture non latine");
+  }
+
+  // Lien dans le champ Nom.
+  if (/https?:\/\/|www\./i.test(name)) {
+    score += 3;
+    reasons.push("lien dans le nom");
+  }
+
+  // Répétition anormale d'un même caractère.
+  if (/(.)\1{9,}/.test(message)) {
+    score += 2;
+    reasons.push("répétition");
+  }
+
+  // Piège temporel : un humain met plusieurs secondes à remplir le formulaire.
+  if (typeof elapsedMs === "number" && elapsedMs >= 0 && elapsedMs < 2500) {
+    score += 4;
+    reasons.push("soumission trop rapide");
+  }
+
+  return { score, reasons };
+}
+
+const SPAM_THRESHOLD = 4;
 
 export async function POST(req: Request) {
   let body: ContactPayload;
@@ -69,9 +150,18 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, errors }, { status: 422 });
   }
 
+  // Filtrage anti-pourriel : au-delà du seuil, on répond « succès » au robot
+  // mais aucun courriel n'est envoyé (ni au CRM, ni à la cliente).
+  const { score, reasons } = spamScore({ name, message, elapsedMs: body.elapsedMs });
+  if (score >= SPAM_THRESHOLD) {
+    console.warn("[contact] Message ignoré (pourriel)", { score, reasons, email });
+    return NextResponse.json({ ok: true });
+  }
+
   const apiKey = process.env.SENDGRID_API_KEY;
   const to = process.env.CONTACT_TO ?? "jajomphe@hotmail.com";
   const from = process.env.CONTACT_FROM ?? "info@jajomphe.ca";
+  const parseur = process.env.CONTACT_PARSEUR ?? "josee-ann.jomphe@in.parseur.com";
 
   // Mode démo : pas de clé configurée → on simule un succès.
   if (!apiKey) {
@@ -86,6 +176,50 @@ export async function POST(req: Request) {
 
   sgMail.setApiKey(apiKey);
 
+  const nowIso = new Date().toISOString();
+
+  // ---------------------------------------------------------------------------
+  // 1) Courriel LEAD vers le parseur du CRM.
+  //    Format volontairement STABLE et labellisé (une info par ligne + tableau)
+  //    pour une extraction fiable par Parseur.
+  // ---------------------------------------------------------------------------
+  const parseurText =
+    `Nom: ${name}\n` +
+    `Courriel: ${email}\n` +
+    `Téléphone: ${phone || "—"}\n` +
+    `Sujet: ${subject}\n` +
+    `Propriété: ${propertyRef || "—"}\n` +
+    `Source: jajomphe.ca\n` +
+    `Date: ${nowIso}\n` +
+    `\n` +
+    `Message:\n${message}\n`;
+
+  const row = (label: string, value: string) =>
+    `<tr><td style="padding:4px 12px 4px 0;font-weight:bold">${label}</td>` +
+    `<td style="padding:4px 0">${escapeHtml(value)}</td></tr>`;
+
+  const parseurLead = {
+    to: parseur,
+    from: { email: from, name: "Site Josée-Ann Jomphe" },
+    replyTo: { email, name },
+    subject: `Nouveau lead site web — ${subject}`,
+    text: parseurText,
+    html:
+      `<table style="font-family:Arial,sans-serif;font-size:14px;color:#111;border-collapse:collapse">` +
+      row("Nom", name) +
+      row("Courriel", email) +
+      row("Téléphone", phone || "—") +
+      row("Sujet", subject) +
+      row("Propriété", propertyRef || "—") +
+      row("Source", "jajomphe.ca") +
+      row("Date", nowIso) +
+      row("Message", message) +
+      `</table>`,
+  };
+
+  // ---------------------------------------------------------------------------
+  // 2) Notification lisible pour la cliente (copie de courtoisie).
+  // ---------------------------------------------------------------------------
   const refLine = propertyRef
     ? `<p><strong>Propriété concernée :</strong> ${escapeHtml(propertyRef)}</p>`
     : "";
@@ -95,9 +229,7 @@ export async function POST(req: Request) {
     from: { email: from, name: "Site Josée-Ann Jomphe" },
     replyTo: { email, name },
     subject: `Nouvelle demande — ${subject}`,
-    text: `Nom: ${name}\nCourriel: ${email}\nTéléphone: ${phone}\nSujet: ${subject}\n${
-      propertyRef ? `Propriété: ${propertyRef}\n` : ""
-    }\n${message}`,
+    text: parseurText,
     html: `
       <div style="font-family:Georgia,serif;color:#16130f;max-width:560px">
         <h2 style="font-weight:400">Nouvelle demande de contact</h2>
@@ -113,6 +245,9 @@ export async function POST(req: Request) {
       </div>`,
   };
 
+  // ---------------------------------------------------------------------------
+  // 3) Auto-réponse au visiteur.
+  // ---------------------------------------------------------------------------
   const autoReply = {
     to: { email, name },
     from: { email: from, name: "Josée-Ann Jomphe" },
@@ -131,7 +266,11 @@ export async function POST(req: Request) {
   };
 
   try {
-    await Promise.all([sgMail.send(notification), sgMail.send(autoReply)]);
+    await Promise.all([
+      sgMail.send(parseurLead),
+      sgMail.send(notification),
+      sgMail.send(autoReply),
+    ]);
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[contact] Échec de l'envoi SendGrid", err);
