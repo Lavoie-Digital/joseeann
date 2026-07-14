@@ -49,9 +49,6 @@ export function SoldMarquee() {
                 sizes="(max-width: 640px) 288px, 384px"
                 className="img-warm object-cover"
               />
-              <span className="absolute left-3 top-3 rounded-full bg-ink/70 px-3 py-1 text-[0.65rem] uppercase tracking-[0.18em] text-bone backdrop-blur-sm">
-                Vendu
-              </span>
             </div>
           ))}
         </div>
