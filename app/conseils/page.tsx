@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container, Eyebrow, ButtonLink, PageHero } from "@/components/ui";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
+import { MortgageCalculator } from "@/components/conseils/mortgage-calculator";
 import { ArrowUpRight, PlayCircle, TrendingUp, KeyRound, HelpCircle } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -107,6 +108,9 @@ export default function ConseilsPage() {
           </Stagger>
         </Container>
       </section>
+
+      {/* Calculatrice hypothécaire */}
+      <MortgageCalculator />
 
       {/* Vidéos */}
       <section className="border-t border-taupe/25 bg-charcoal py-24 text-bone lg:py-32">
