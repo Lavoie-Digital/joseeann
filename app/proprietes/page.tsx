@@ -23,7 +23,7 @@ export default async function ProprietesPage() {
           </>
         }
         subtitle="Découvrez les propriétés que je représente actuellement au Saguenay. Qu'il s'agisse de votre première maison, d'un investissement ou d'un nouveau chapitre, chaque inscription mérite d'être découverte."
-        image="/images/listing-6.jpg"
+        image="/onglet1.jpg"
       />
 
       <section className="bg-bone py-20 lg:py-28">

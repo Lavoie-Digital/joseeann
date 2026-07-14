@@ -103,7 +103,7 @@ export default function VendreAcheterPage() {
           </>
         }
         subtitle="Que vous vendiez, achetiez — ou les deux — je vous accompagne du premier café à la remise des clés, avec méthode et sérénité."
-        image="/images/listing-1.jpg"
+        image="/onglet5.jpg"
       />
 
       {/* Mosaïque défilante des ventes récentes */}

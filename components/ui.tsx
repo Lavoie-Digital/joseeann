@@ -48,7 +48,7 @@ export function PageHero({
 }) {
   if (image) {
     return (
-      <section className="relative flex min-h-[56vh] items-end overflow-hidden pt-32">
+      <section className="relative flex min-h-[52vh] items-end overflow-hidden pt-32 lg:min-h-[42vh]">
         <Image
           src={image}
           alt=""
@@ -57,7 +57,8 @@ export function PageHero({
           sizes="100vw"
           className="img-warm object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/35 to-ink/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/45 to-ink/45" />
+        <div className="absolute inset-0 bg-ink/20" />
         <Container className="relative z-10 pb-16 text-bone">
           <span className="eyebrow inline-flex items-center gap-3 text-bone/80">
             <span className="h-px w-8 bg-gilt" />

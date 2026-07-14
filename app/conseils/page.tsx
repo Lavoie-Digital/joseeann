@@ -75,7 +75,7 @@ export default function ConseilsPage() {
           </>
         }
         subtitle="Articles, vidéos et tendances du marché : une bibliothèque de contenu pensée pour vous éclairer, que vous soyez acheteur, vendeur ou simplement curieux."
-        image="/images/interior-3.jpg"
+        image="/onglet3.jpg"
       />
 
       {/* Raccourcis vers les guides & FAQ */}

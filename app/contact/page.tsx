@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Suspense } from "react";
 import { Container, Eyebrow } from "@/components/ui";
 import { Reveal } from "@/components/motion";
@@ -15,7 +16,7 @@ export default function ContactPage() {
   return (
     <section className="bg-bone pb-24 pt-32 lg:pt-44">
       <Container>
-        <div className="grid gap-16 lg:grid-cols-12 lg:gap-24">
+        <div className="grid gap-16 lg:grid-cols-12 lg:gap-24 lg:items-center">
           {/* Colonne info */}
           <div className="lg:col-span-5">
             <Reveal>
@@ -59,6 +60,18 @@ export default function ContactPage() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.4}>
+              <div className="relative mt-12 aspect-[4/5] max-w-md overflow-hidden">
+                <Image
+                  src="/portrait 2.jpg"
+                  alt="Josée-Ann Jomphe, courtier immobilier"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="img-warm object-cover"
+                />
               </div>
             </Reveal>
           </div>
