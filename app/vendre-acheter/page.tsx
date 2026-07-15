@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   title: "Vendre & acheter",
   description:
     "Vendre ou acheter au Saguenay–Lac-Saint-Jean : les étapes, les check-lists et l'accompagnement complet de Josée-Ann Jomphe, du premier café à la remise des clés.",
+  alternates: { canonical: "/vendre-acheter" },
 };
 
 const SELL_STEPS = [

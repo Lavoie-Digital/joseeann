@@ -5,6 +5,8 @@ import { Container, Eyebrow, ButtonLink } from "@/components/ui";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { ListingCard } from "@/components/listing-card";
 import { FaqAccordion, type FaqGroup } from "@/components/faq-accordion";
+import { JsonLd } from "@/components/json-ld";
+import { faqJsonLd } from "@/lib/seo";
 import { getFeaturedListings } from "@/lib/listings";
 import {
   Search,
@@ -50,6 +52,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <JsonLd data={faqJsonLd(HOME_FAQ.flatMap((g) => g.items))} />
       <Hero />
 
       {/* Propriétés en vedette — directement sous le hero */}

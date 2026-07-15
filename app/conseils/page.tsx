@@ -9,7 +9,15 @@ import { ArrowUpRight, PlayCircle, TrendingUp, KeyRound, HelpCircle } from "luci
 export const metadata: Metadata = {
   title: "Conseils",
   description:
-    "Articles, vidéos, tendances et conseils pour acheteurs et vendeurs au Saguenay–Lac-Saint-Jean. Le coin conseils de Josée-Ann Jomphe.",
+    "Articles, vidéos, tendances et conseils pour acheteurs et vendeurs au Saguenay–Lac-Saint-Jean. Le coin conseils de Josée-Ann Jomphe. Calculatrice hypothécaire gratuite.",
+  alternates: { canonical: "/conseils" },
+  openGraph: {
+    title: "Conseils immobiliers & calculatrice hypothécaire · Josée-Ann Jomphe",
+    description:
+      "Articles, vidéos et calculatrice hypothécaire pour acheteurs et vendeurs au Saguenay–Lac-Saint-Jean.",
+    url: "https://jajomphe.ca/conseils",
+    type: "website",
+  },
 };
 
 const ARTICLES = [

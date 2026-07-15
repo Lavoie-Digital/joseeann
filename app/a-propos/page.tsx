@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "À propos",
   description:
     "Josée-Ann Jomphe, courtier immobilier — une approche humaine, rigoureuse et discrète du courtage résidentiel et commercial haut de gamme.",
+  alternates: { canonical: "/a-propos" },
 };
 
 const VALUES = [

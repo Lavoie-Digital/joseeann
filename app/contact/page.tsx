@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Prenez rendez-vous avec Josée-Ann Jomphe, courtier immobilier. Évaluation gratuite, visites privées et accompagnement sur mesure.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

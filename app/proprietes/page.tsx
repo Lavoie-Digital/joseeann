@@ -2,18 +2,35 @@ import type { Metadata } from "next";
 import { Container, PageHero } from "@/components/ui";
 import { ProprietesBrowser } from "@/components/proprietes/browser";
 import { getListings } from "@/lib/listings";
+import { JsonLd } from "@/components/json-ld";
+import { absoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Propriétés",
   description:
     "Découvrez les propriétés résidentielles et commerciales que représente Josée-Ann Jomphe au Saguenay–Lac-Saint-Jean, mises à jour automatiquement avec Centris®.",
+  alternates: { canonical: "/proprietes" },
 };
 
 export default async function ProprietesPage() {
   const listings = await getListings();
 
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Propriétés à vendre — Josée-Ann Jomphe",
+    numberOfItems: listings.length,
+    itemListElement: listings.map((l, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: absoluteUrl(`/proprietes/${l.slug}`),
+      name: l.title,
+    })),
+  };
+
   return (
     <>
+      <JsonLd data={itemListJsonLd} />
       <PageHero
         eyebrow="Portefeuille"
         title={

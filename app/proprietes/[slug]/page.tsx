@@ -9,6 +9,8 @@ import {
   formatPrice,
   formatArea,
 } from "@/lib/listings";
+import { JsonLd } from "@/components/json-ld";
+import { listingJsonLd, breadcrumbJsonLd, absoluteUrl } from "@/lib/seo";
 import {
   BedDouble,
   Bath,
@@ -36,9 +38,19 @@ export async function generateMetadata({
   const { slug } = await params;
   const listing = await getListingBySlug(slug);
   if (!listing) return { title: "Propriété introuvable" };
+  const path = `/proprietes/${listing.slug}`;
+  const description = listing.description.slice(0, 155);
   return {
     title: listing.title,
-    description: listing.description.slice(0, 155),
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      title: `${listing.title} · ${formatPrice(listing.price)}`,
+      description,
+      type: "website",
+      url: absoluteUrl(path),
+      images: listing.images.slice(0, 1).map((src) => ({ url: absoluteUrl(src) })),
+    },
   };
 }
 
@@ -86,6 +98,16 @@ export default async function ListingPage({
 
   return (
     <article className="bg-bone">
+      <JsonLd
+        data={[
+          listingJsonLd(listing),
+          breadcrumbJsonLd([
+            { name: "Accueil", path: "/" },
+            { name: "Propriétés", path: "/proprietes" },
+            { name: listing.title, path: `/proprietes/${listing.slug}` },
+          ]),
+        ]}
+      />
       <Container className="pt-32 lg:pt-40">
         <Link
           href="/proprietes"
