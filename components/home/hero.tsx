@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { GoogleBadge } from "@/components/reviews";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -107,12 +108,12 @@ export function Hero() {
       />
 
       {/* Contenu centré */}
-      <div className="relative z-10 flex flex-col items-center px-6 pt-20 text-center">
+      <div className="relative z-10 flex flex-col items-center px-6 pb-8 pt-12 text-center sm:pb-16 sm:pt-24">
         <motion.div
           initial={{ opacity: 0, y: 28, scale: 0.94 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1.5, ease: EASE, delay: 0.45 }}
-          className="w-[min(72vw,440px)] drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
+          className="w-[min(44vw,440px)] drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
         >
           <Image
             src="/logo-mark-light.png"
@@ -128,14 +129,14 @@ export function Hero() {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1.2, ease: EASE, delay: 1 }}
-          className="mt-9 block h-px w-40 origin-center bg-gradient-to-r from-transparent via-gilt to-transparent"
+          className="mt-5 block h-px w-40 origin-center bg-gradient-to-r from-transparent via-gilt to-transparent sm:mt-9"
         />
 
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: EASE, delay: 1.15 }}
-          className="mt-8 max-w-2xl font-display text-[clamp(1.8rem,3.6vw,3rem)] font-light leading-[1.2] text-bone"
+          className="mt-4 max-w-2xl font-display text-[clamp(1.4rem,3.6vw,3rem)] font-light leading-[1.2] text-bone sm:mt-8"
         >
           Au-delà de l&apos;immobilier, il y a des décisions qui changent une
           vie.
@@ -145,23 +146,25 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: EASE, delay: 1.25 }}
-          className="mt-7 max-w-2xl text-base leading-relaxed text-bone/80"
+          className="mt-3 max-w-2xl text-sm leading-snug text-bone/80 sm:mt-7 sm:text-base sm:leading-relaxed"
         >
           Je suis Josée-Ann Jomphe, courtier immobilier résidentiel et
-          commercial au Saguenay. Depuis plus de 5 ans, j&apos;accompagne mes
-          clients avec une approche où les relations humaines sont aussi
-          importantes que les résultats.
+          commercial au Saguenay. Depuis plus de 5 ans, j&apos;aide mes clients
+          à prendre l&apos;une des plus grandes décisions de leur vie en misant
+          sur la confiance, la transparence et un accompagnement humain. Parce
+          qu&apos;au-delà des propriétés, ce sont les personnes et leur histoire
+          qui comptent vraiment.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: EASE, delay: 1.4 }}
-          className="mt-11 flex flex-wrap items-center justify-center gap-4"
+          className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:mt-11 sm:gap-4"
         >
           <Link
             href="/proprietes"
-            className="group inline-flex items-center gap-2.5 rounded-full bg-bone px-8 py-4 text-[0.78rem] uppercase tracking-[0.2em] text-ink transition-all duration-300 hover:bg-gilt hover:text-bone"
+            className="group inline-flex items-center gap-2.5 rounded-full bg-bone px-6 py-3 text-[0.78rem] uppercase tracking-[0.2em] text-ink transition-all duration-300 hover:bg-gilt hover:text-bone sm:px-8 sm:py-4"
           >
             Explorer les propriétés
             <ArrowUpRight
@@ -170,11 +173,20 @@ export function Hero() {
             />
           </Link>
           <Link
-            href="/contact"
-            className="inline-flex items-center gap-2.5 rounded-full border border-bone/60 px-8 py-4 text-[0.78rem] uppercase tracking-[0.2em] text-bone transition-all duration-300 hover:border-bone hover:bg-bone/10"
+            href="/contact?sujet=evaluation"
+            className="inline-flex items-center gap-2.5 rounded-full border border-bone/60 px-6 py-3 text-[0.78rem] uppercase tracking-[0.2em] text-bone transition-all duration-300 hover:border-bone hover:bg-bone/10 sm:px-8 sm:py-4"
           >
-            Découvrir la valeur marchande de votre propriété
+            Connaître la valeur de ma propriété
           </Link>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: EASE, delay: 1.6 }}
+          className="mt-4 sm:mt-8"
+        >
+          <GoogleBadge tone="dark" />
         </motion.div>
       </div>
     </section>

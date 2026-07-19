@@ -35,11 +35,11 @@ export default async function ProprietesPage() {
         eyebrow="Portefeuille"
         title={
           <>
-            Des propriétés pour tous les{" "}
-            <span className="italic text-gilt">projets de vie</span>
+            Des propriétés qui méritent d&apos;être{" "}
+            <span className="italic text-gilt">découvertes</span>
           </>
         }
-        subtitle="Découvrez les propriétés que je représente actuellement au Saguenay. Qu'il s'agisse de votre première maison, d'un investissement ou d'un nouveau chapitre, chaque inscription mérite d'être découverte."
+        subtitle="Que vous cherchiez une maison pour votre famille, un investissement ou un nouveau départ, chaque propriété a quelque chose d'unique à offrir. Parcourez les inscriptions que je représente actuellement et trouvez celle qui correspond à votre projet."
         image="/onglet3.jpg"
       />
 

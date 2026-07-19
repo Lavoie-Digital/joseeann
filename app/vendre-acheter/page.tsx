@@ -103,7 +103,7 @@ export default function VendreAcheterPage() {
             <span className="italic text-gilt">à chaque étape</span>.
           </>
         }
-        subtitle="Que vous vendiez, achetiez — ou les deux — je vous accompagne du premier café à la remise des clés, avec méthode et sérénité."
+        subtitle="Que vous soyez vendeur, acheteur ou les deux, je vous accompagne avec rigueur, transparence et bienveillance. Vous profitez d'un service personnalisé, d'une stratégie adaptée à votre réalité et d'une présence rassurante à chaque étape du processus."
         image="/onglet5.jpg"
       />
 

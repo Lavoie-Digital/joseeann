@@ -43,11 +43,6 @@ export function SiteFooter() {
             <p className="eyebrow mt-3 text-taupe">
               Courtier immobilier résidentiel et commercial
             </p>
-            <p className="mt-6 max-w-md text-sm leading-relaxed text-bone/60">
-              Un accompagnement humain et rigoureux pour vendre, acheter et
-              investir au Saguenay–Lac-Saint-Jean. Des relations de confiance,
-              autant que des résultats.
-            </p>
             <div className="mt-8 flex items-center gap-4">
               <Image
                 src="/viacapital.webp"
@@ -59,9 +54,9 @@ export function SiteFooter() {
               <p className="text-xs uppercase leading-relaxed tracking-[0.18em] text-bone/45">
                 Via Capitale
                 <br />
-                Agence immobilière
-                <br />
                 Saguenay–Lac-Saint-Jean
+                <br />
+                Agence immobilière
               </p>
             </div>
           </div>

@@ -56,7 +56,12 @@ export function SiteHeader() {
         }`}
       >
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 lg:px-10">
-          <Link href="/" className="relative z-10 flex items-center gap-3">
+          <Link
+            href="/"
+            className={`relative z-10 items-center gap-3 ${
+              light ? "hidden lg:flex" : "flex"
+            }`}
+          >
             <Image
               src={light ? "/logo-mark-light.png" : "/logo-mark.png"}
               alt="Josée-Ann Jomphe inc. — Courtier immobilier résidentiel et commercial"
@@ -96,7 +101,7 @@ export function SiteHeader() {
             })}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="ml-auto flex items-center gap-4">
             <Link
               href="/contact"
               className={`hidden rounded-full border px-6 py-2.5 text-[0.78rem] uppercase tracking-[0.2em] transition-all duration-300 lg:inline-block ${

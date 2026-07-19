@@ -5,6 +5,7 @@ import { Container, Eyebrow, ButtonLink } from "@/components/ui";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { ListingCard } from "@/components/listing-card";
 import { FaqAccordion, type FaqGroup } from "@/components/faq-accordion";
+import { Testimonials } from "@/components/reviews";
 import { JsonLd } from "@/components/json-ld";
 import { faqJsonLd } from "@/lib/seo";
 import { getFeaturedListings } from "@/lib/listings";
@@ -113,13 +114,6 @@ export default async function HomePage() {
                   <span className="italic text-gilt">différence</span>.
                 </p>
               </Reveal>
-              <Reveal delay={0.2}>
-                <p className="mt-8 max-w-xl text-base leading-relaxed text-smoke">
-                  De la première visite à la signature, chaque étape est menée
-                  avec méthode et sensibilité. Une approche épurée, sans
-                  précipitation, entièrement dédiée à vos objectifs.
-                </p>
-              </Reveal>
               <Reveal delay={0.3}>
                 <div className="mt-10">
                   <ButtonLink href="/a-propos" variant="outline">
@@ -185,7 +179,7 @@ export default async function HomePage() {
             </Reveal>
             <Reveal delay={0.1}>
               <h2 className="mt-6 font-display text-[clamp(2.2rem,4.5vw,3.6rem)] font-light leading-tight text-ink">
-                Un accompagnement pour chaque projet.
+                Une expertise adaptée à vos objectifs.
               </h2>
             </Reveal>
           </div>
@@ -215,6 +209,9 @@ export default async function HomePage() {
           </Stagger>
         </Container>
       </section>
+
+      {/* Témoignages — avis Google */}
+      <Testimonials />
 
       {/* Art de vivre / guides teaser */}
       <section className="relative overflow-hidden">
