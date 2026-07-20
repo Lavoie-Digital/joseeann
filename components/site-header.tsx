@@ -69,7 +69,7 @@ export function SiteHeader() {
               height={536}
               priority
               className={`w-auto transition-all duration-500 ${
-                scrolled ? "h-12" : "h-16"
+                scrolled ? "h-11" : "h-14"
               }`}
             />
           </Link>
@@ -101,7 +101,7 @@ export function SiteHeader() {
             })}
           </nav>
 
-          <div className="ml-auto flex items-center gap-4">
+          <div className="ml-auto flex items-center gap-4 lg:ml-0">
             <Link
               href="/contact"
               className={`hidden rounded-full border px-6 py-2.5 text-[0.78rem] uppercase tracking-[0.2em] transition-all duration-300 lg:inline-block ${
