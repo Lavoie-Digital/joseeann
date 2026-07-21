@@ -1,5 +1,8 @@
+"use client";
+
+import { useReducedMotion } from "framer-motion";
 import { Container, Eyebrow } from "@/components/ui";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion";
+import { Reveal, motion, EASE } from "@/components/motion";
 
 /**
  * Témoignages clients (avis Google).
@@ -114,7 +117,11 @@ export function GoogleBadge({
 }
 
 export function Testimonials() {
+  const reduce = useReducedMotion();
   const single = REVIEWS.length === 1;
+  // Léger tremblement (déplacement + rotation minimes) qui s'atténue.
+  const shake = { rotate: [0, -0.6, 0.6, -0.4, 0.4, 0], x: [0, -2, 2, -1.5, 1.5, 0] };
+
   return (
     <section className="bg-bone py-20 lg:py-28">
       <Container>
@@ -134,43 +141,64 @@ export function Testimonials() {
           </Reveal>
         </div>
 
-        <Stagger
+        <div
           className={`mt-14 grid gap-8 ${
             single ? "max-w-3xl" : "md:grid-cols-2 lg:grid-cols-3"
           }`}
         >
-          {REVIEWS.map((r) => (
-            <StaggerItem key={r.author}>
-              <figure className="flex h-full flex-col border border-taupe/30 bg-sand/50 p-8 lg:p-10">
-                <span className="font-display text-6xl leading-none text-gilt/40">
-                  &ldquo;
+          {REVIEWS.map((r, i) => (
+            <motion.figure
+              key={r.author}
+              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
+              whileInView={
+                reduce
+                  ? { opacity: 1 }
+                  : {
+                      opacity: 1,
+                      y: 0,
+                      ...shake,
+                      transition: {
+                        duration: 0.7,
+                        ease: EASE,
+                        delay: i * 0.1,
+                        // Le tremblement joue juste après l'apparition.
+                        rotate: { duration: 0.6, delay: i * 0.1 + 0.35 },
+                        x: { duration: 0.6, delay: i * 0.1 + 0.35 },
+                      },
+                    }
+              }
+              whileHover={
+                reduce ? undefined : { ...shake, transition: { duration: 0.6 } }
+              }
+              viewport={{ once: true, margin: "-10% 0px" }}
+              className="group flex h-full flex-col border border-taupe/30 bg-sand/50 p-8 transition-[border-color,background-color,box-shadow] duration-300 hover:border-gilt/60 hover:bg-sand hover:shadow-[0_24px_48px_-28px_rgba(22,19,15,0.4)] lg:p-10"
+            >
+              <span className="font-display text-6xl leading-none text-gilt/40 transition-colors duration-300 group-hover:text-gilt/70">
+                &ldquo;
+              </span>
+              <Stars n={r.rating ?? 5} />
+              <blockquote
+                className={`mt-4 flex-1 leading-relaxed text-charcoal ${
+                  single ? "text-lg lg:text-xl" : "text-base"
+                }`}
+              >
+                {r.text}
+              </blockquote>
+              <figcaption className="mt-6 flex items-center gap-3 border-t border-taupe/30 pt-5">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gilt/15 font-display text-lg text-gilt transition-transform duration-300 group-hover:scale-110">
+                  {r.author.charAt(0)}
                 </span>
-                <Stars n={r.rating ?? 5} />
-                <blockquote
-                  className={`mt-4 flex-1 leading-relaxed text-charcoal ${
-                    single ? "text-lg lg:text-xl" : "text-base"
-                  }`}
-                >
-                  {r.text}
-                </blockquote>
-                <figcaption className="mt-6 flex items-center gap-3 border-t border-taupe/30 pt-5">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gilt/15 font-display text-lg text-gilt">
-                    {r.author.charAt(0)}
+                <span>
+                  <span className="block font-medium text-ink">{r.author}</span>
+                  <span className="flex items-center gap-1.5 text-xs text-clay">
+                    <GoogleG className="h-3.5 w-3.5" />
+                    Avis Google
                   </span>
-                  <span>
-                    <span className="block font-medium text-ink">
-                      {r.author}
-                    </span>
-                    <span className="flex items-center gap-1.5 text-xs text-clay">
-                      <GoogleG className="h-3.5 w-3.5" />
-                      Avis Google
-                    </span>
-                  </span>
-                </figcaption>
-              </figure>
-            </StaggerItem>
+                </span>
+              </figcaption>
+            </motion.figure>
           ))}
-        </Stagger>
+        </div>
       </Container>
     </section>
   );
