@@ -3,11 +3,10 @@ import Link from "next/link";
 import { Container, Eyebrow, ButtonLink, PageHero } from "@/components/ui";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { SoldMarquee } from "@/components/sold-marquee";
+import { GuideViewer } from "@/components/guide-viewer";
 import {
-  ClipboardList,
   Home,
   Truck,
-  FileText,
   Wallet,
   ListChecks,
   Search,
@@ -20,21 +19,6 @@ export const metadata: Metadata = {
     "Vendre ou acheter au Saguenay–Lac-Saint-Jean : les étapes, les check-lists et l'accompagnement complet de Josée-Ann Jomphe, du premier café à la remise des clés.",
   alternates: { canonical: "/vendre-acheter" },
 };
-
-const SELL_STEPS = [
-  { t: "Déterminer la juste valeur marchande de votre propriété", d: "Une analyse rigoureuse du marché et des ventes comparables pour fixer le bon prix, dès le départ." },
-  { t: "Préparer votre propriété pour maximiser son potentiel", d: "Home staging, petites rénovations stratégiques et photographie professionnelle pour créer le coup de cœur." },
-  { t: "Déployer une stratégie de mise en marché performante", d: "Diffusion sur Centris®, réseaux sociaux et réseau d'acheteurs — pour rejoindre les bonnes personnes." },
-  { t: "Attirer des acheteurs qualifiés et gérer les visites", d: "Filtrage des acheteurs sérieux, organisation des visites et suivi rigoureux après chacune d'elles." },
-  { t: "Négocier la meilleure entente et vous accompagner jusqu'à la vente", d: "Défense de vos intérêts à la table de négociation, puis suivi complet jusqu'à la signature chez le notaire." },
-];
-
-const SELL_RESOURCES = [
-  { icon: ClipboardList, t: "Check-list : préparer votre maison" },
-  { icon: Home, t: "Guide du vendeur" },
-  { icon: Truck, t: "Check-list de déménagement" },
-  { icon: FileText, t: "Documents à préparer" },
-];
 
 const BUY_STEPS = [
   { t: "Établir votre budget et obtenir une préautorisation", d: "On clarifie votre capacité d'emprunt avec les bons partenaires afin de magasiner en toute confiance." },
@@ -113,7 +97,7 @@ export default function VendreAcheterPage() {
       {/* VENDRE */}
       <section id="vendre" className="scroll-mt-20 bg-bone py-24 lg:py-32">
         <Container>
-          <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-16">
             <div className="lg:col-span-5">
               <Reveal>
                 <Eyebrow>Vendre</Eyebrow>
@@ -141,17 +125,12 @@ export default function VendreAcheterPage() {
 
             <div className="lg:col-span-7">
               <Reveal>
-                <p className="eyebrow text-clay">Votre plan vers une vente réussie</p>
+                <p className="eyebrow text-clay">Feuilletez mon guide du vendeur</p>
               </Reveal>
-              <Steps steps={SELL_STEPS} />
+              <Reveal delay={0.15} className="mt-8">
+                <GuideViewer />
+              </Reveal>
             </div>
-          </div>
-
-          <div className="mt-14">
-            <Reveal>
-              <p className="eyebrow text-clay">Ressources &amp; check-lists</p>
-            </Reveal>
-            <Resources items={SELL_RESOURCES} />
           </div>
         </Container>
       </section>
