@@ -146,6 +146,17 @@ export function SiteFooter() {
             Courtier immobilier résidentiel et commercial · Membre de
             l&apos;OACIQ · Permis OACIQ H6362
           </p>
+          <p className="tracking-wide">
+            Conception de{" "}
+            <a
+              href="https://lavoiedigital.ca"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-bone/70 underline-offset-4 transition-colors hover:text-gilt hover:underline"
+            >
+              Lavoie Digital
+            </a>
+          </p>
         </div>
       </div>
     </footer>
