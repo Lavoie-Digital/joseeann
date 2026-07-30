@@ -193,28 +193,24 @@ export default function ConseilsPage() {
           <Stagger className="mt-14 grid gap-x-8 gap-y-12 md:grid-cols-3">
             {ARTICLES.map((a) => (
               <StaggerItem key={a.title}>
-                <Link href="/contact" className="group block">
+                <div>
                   <div className="relative aspect-[4/3] overflow-hidden bg-greige">
                     <Image
                       src={a.img}
                       alt={a.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
-                      className="img-warm object-cover transition-transform duration-[1.2s] group-hover:scale-105"
+                      className="img-warm object-cover"
                     />
                   </div>
                   <p className="eyebrow mt-5 text-clay">{a.tag}</p>
-                  <h3 className="mt-3 flex items-start gap-2 font-display text-2xl font-light leading-snug text-ink transition-colors group-hover:text-gilt">
+                  <h3 className="mt-3 font-display text-2xl font-light leading-snug text-ink">
                     {a.title}
-                    <ArrowUpRight
-                      strokeWidth={1.4}
-                      className="mt-1.5 h-5 w-5 shrink-0 opacity-0 transition-opacity group-hover:opacity-100"
-                    />
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-smoke">
                     {a.excerpt}
                   </p>
-                </Link>
+                </div>
               </StaggerItem>
             ))}
           </Stagger>
@@ -234,7 +230,7 @@ export default function ConseilsPage() {
               </h2>
               <p className="mt-6 max-w-xl text-bone/75">
                 Vendeur, acheteur ou investisseur : obtenez des conseils adaptés
-                à votre situation et au marché actuel. Sans engagement.
+                à votre situation et au marché actuel.
               </p>
               <div className="mt-10">
                 <ButtonLink

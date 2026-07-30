@@ -119,8 +119,6 @@ export function GoogleBadge({
 export function Testimonials() {
   const reduce = useReducedMotion();
   const single = REVIEWS.length === 1;
-  // Léger tremblement (déplacement + rotation minimes) qui s'atténue.
-  const shake = { rotate: [0, -0.6, 0.6, -0.4, 0.4, 0], x: [0, -2, 2, -1.5, 1.5, 0] };
 
   return (
     <section className="bg-bone py-20 lg:py-28">
@@ -156,20 +154,11 @@ export function Testimonials() {
                   : {
                       opacity: 1,
                       y: 0,
-                      ...shake,
-                      transition: {
-                        duration: 0.7,
-                        ease: EASE,
-                        delay: i * 0.1,
-                        // Le tremblement joue juste après l'apparition.
-                        rotate: { duration: 0.6, delay: i * 0.1 + 0.35 },
-                        x: { duration: 0.6, delay: i * 0.1 + 0.35 },
-                      },
+                      transition: { duration: 0.7, ease: EASE, delay: i * 0.1 },
                     }
               }
-              whileHover={
-                reduce ? undefined : { ...shake, transition: { duration: 0.6 } }
-              }
+              whileHover={reduce ? undefined : { y: -6 }}
+              transition={{ duration: 0.35, ease: EASE }}
               viewport={{ once: true, margin: "-10% 0px" }}
               className="group flex h-full flex-col border border-taupe/30 bg-sand/50 p-8 transition-[border-color,background-color,box-shadow] duration-300 hover:border-gilt/60 hover:bg-sand hover:shadow-[0_24px_48px_-28px_rgba(22,19,15,0.4)] lg:p-10"
             >

@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Container, Eyebrow, ButtonLink, PageHero } from "@/components/ui";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { SoldMarquee } from "@/components/sold-marquee";
-import { GuideViewer } from "@/components/guide-viewer";
+import { GuideGate } from "@/components/guide-gate";
 import {
+  ClipboardList,
+  FileText,
   Home,
   Truck,
   Wallet,
@@ -19,6 +22,21 @@ export const metadata: Metadata = {
     "Vendre ou acheter au Saguenay–Lac-Saint-Jean : les étapes, les check-lists et l'accompagnement complet de Josée-Ann Jomphe, du premier café à la remise des clés.",
   alternates: { canonical: "/vendre-acheter" },
 };
+
+const SELL_STEPS = [
+  { t: "Déterminer la juste valeur marchande de votre propriété", d: "Une analyse rigoureuse du marché et des ventes comparables pour fixer le bon prix, dès le départ." },
+  { t: "Préparer votre propriété pour maximiser son potentiel", d: "Home staging, petites rénovations stratégiques et photographie professionnelle pour créer le coup de cœur." },
+  { t: "Déployer une stratégie de mise en marché performante", d: "Diffusion sur Centris®, réseaux sociaux et réseau d'acheteurs — pour rejoindre les bonnes personnes." },
+  { t: "Attirer des acheteurs qualifiés et gérer les visites", d: "Filtrage des acheteurs sérieux, organisation des visites et suivi rigoureux après chacune d'elles." },
+  { t: "Négocier la meilleure entente et vous accompagner jusqu'à la vente", d: "Défense de vos intérêts à la table de négociation, puis suivi complet jusqu'à la signature chez le notaire." },
+];
+
+const SELL_RESOURCES = [
+  { icon: ClipboardList, t: "Check-list : préparer votre maison" },
+  { icon: Home, t: "Guide du vendeur" },
+  { icon: Truck, t: "Check-list de déménagement" },
+  { icon: FileText, t: "Documents à préparer" },
+];
 
 const BUY_STEPS = [
   { t: "Établir votre budget et obtenir une préautorisation", d: "On clarifie votre capacité d'emprunt avec les bons partenaires afin de magasiner en toute confiance." },
@@ -104,14 +122,14 @@ export default function VendreAcheterPage() {
               </Reveal>
               <Reveal delay={0.1}>
                 <h2 className="mt-6 font-display text-[clamp(2.2rem,4.5vw,3.6rem)] font-light leading-tight text-ink">
-                  Vendre au meilleur prix, sereinement.
+                  Une vente bien préparée fait toute la différence.
                 </h2>
               </Reveal>
               <Reveal delay={0.2}>
                 <p className="mt-6 leading-relaxed text-smoke">
-                  De l&apos;évaluation à la signature, une stratégie claire pour
-                  vendre votre propriété dans les meilleures conditions — sans
-                  stress et sans mauvaises surprises.
+                  Chaque étape est planifiée avec soin afin d&apos;optimiser
+                  votre mise en marché, de protéger vos intérêts et
+                  d&apos;obtenir le meilleur résultat.
                 </p>
               </Reveal>
               <Reveal delay={0.3}>
@@ -124,13 +142,38 @@ export default function VendreAcheterPage() {
             </div>
 
             <div className="lg:col-span-7">
-              <Reveal>
-                <p className="eyebrow text-clay">Feuilletez mon guide du vendeur</p>
-              </Reveal>
-              <Reveal delay={0.15} className="mt-8">
-                <GuideViewer />
+              <Reveal delay={0.15}>
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src="/images/interior-4.jpg"
+                    alt="Intérieur chaleureux, mis en valeur pour la vente"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 55vw"
+                    className="img-warm object-cover"
+                  />
+                </div>
               </Reveal>
             </div>
+          </div>
+
+          <div className="mt-16">
+            <Reveal>
+              <p className="eyebrow text-clay">Votre plan vers une vente réussie</p>
+            </Reveal>
+            <Steps steps={SELL_STEPS} />
+          </div>
+
+          <div className="mt-14">
+            <Reveal>
+              <p className="eyebrow text-clay">Ressources &amp; check-lists</p>
+            </Reveal>
+            <Resources items={SELL_RESOURCES} />
+          </div>
+
+          <div className="mt-14">
+            <Reveal>
+              <GuideGate />
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -149,14 +192,28 @@ export default function VendreAcheterPage() {
       {/* ACHETER */}
       <section id="acheter" className="scroll-mt-20 bg-sand py-24 lg:py-32">
         <Container>
-          <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-16">
+            <div className="lg:col-span-7">
               <Reveal>
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src="/images/lifestyle-family.jpg"
+                    alt="Famille souriante s'amusant dans leur nouveau chez-soi"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 55vw"
+                    className="img-warm object-cover"
+                  />
+                </div>
+              </Reveal>
+            </div>
+
+            <div className="lg:col-span-5">
+              <Reveal delay={0.1}>
                 <Eyebrow>Acheter</Eyebrow>
               </Reveal>
-              <Reveal delay={0.1}>
+              <Reveal delay={0.15}>
                 <h2 className="mt-6 font-display text-[clamp(2.2rem,4.5vw,3.6rem)] font-light leading-tight text-ink">
-                  Acheter la bonne propriété, sereinement.
+                  Bien acheter, ça se prépare.
                 </h2>
               </Reveal>
               <Reveal delay={0.2}>
@@ -177,15 +234,15 @@ export default function VendreAcheterPage() {
                 </div>
               </Reveal>
             </div>
+          </div>
 
-            <div className="lg:col-span-7">
-              <Reveal>
-                <p className="eyebrow text-clay">
-                  Votre parcours vers la bonne propriété
-                </p>
-              </Reveal>
-              <Steps steps={BUY_STEPS} />
-            </div>
+          <div className="mt-16">
+            <Reveal>
+              <p className="eyebrow text-clay">
+                Votre parcours vers la bonne propriété
+              </p>
+            </Reveal>
+            <Steps steps={BUY_STEPS} />
           </div>
 
           <div className="mt-14">
@@ -199,6 +256,13 @@ export default function VendreAcheterPage() {
                 fais parvenir gratuitement.
               </p>
             </Reveal>
+            <Reveal delay={0.25}>
+              <div className="mt-8">
+                <ButtonLink href="/proprietes#alerte" variant="outline">
+                  Créer une alerte propriété
+                </ButtonLink>
+              </div>
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -207,7 +271,7 @@ export default function VendreAcheterPage() {
       <section className="bg-bone py-24 lg:py-32">
         <Container className="text-center">
           <Reveal>
-            <Eyebrow className="justify-center">Sans engagement</Eyebrow>
+            <Eyebrow className="justify-center">Discutons de votre projet</Eyebrow>
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="mx-auto mt-8 max-w-3xl font-display text-[clamp(2rem,4.5vw,3.6rem)] font-light leading-tight text-ink">

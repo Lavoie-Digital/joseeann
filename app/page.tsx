@@ -30,7 +30,7 @@ const HOME_FAQ: FaqGroup[] = [
       },
       {
         q: "Dans quels secteurs travaillez-vous ?",
-        a: "Je dessers l'ensemble du Saguenay–Lac-Saint-Jean, autant en résidentiel qu'en commercial : Saguenay, Alma, Dolbeau-Mistassini et les municipalités voisines.",
+        a: "Je dessers l'ensemble du Saguenay–Lac-Saint-Jean, autant en résidentiel qu'en commercial.",
       },
       {
         q: "Comment est établie la valeur de ma propriété ?",
@@ -151,7 +151,7 @@ export default async function HomePage() {
             {[
               { icon: HandHeart, t: "Bienveillance", d: "Prendre le temps de vous écouter, de comprendre vos besoins et de vous accompagner à chaque étape." },
               { icon: ShieldCheck, t: "Rigueur", d: "Porter une attention particulière à chaque détail afin de protéger vos intérêts et assurer le bon déroulement de votre transaction." },
-              { icon: Eye, t: "Transparence", d: "Vous offrir des conseils honnêtes, une communication claire et toute l'information nécessaire pour prendre des décisions éclairées." },
+              { icon: Eye, t: "Transparence", d: "Offrir des conseils honnêtes, une communication claire et toute l'information nécessaire pour prendre des décisions éclairées." },
               { icon: Scale, t: "Intégrité", d: "Agir avec honnêteté, éthique et professionnalisme, en mettant toujours vos intérêts au premier plan." },
             ].map((v) => (
               <StaggerItem key={v.t}>
@@ -187,7 +187,7 @@ export default async function HomePage() {
           <Stagger className="mt-12 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
             {[
               { icon: Search, t: "Acheter", d: "Trouver la propriété qui correspond à vos besoins, à votre budget et à votre style de vie.", href: "/vendre-acheter#acheter" },
-              { icon: Tag, t: "Vendre", d: "Mettre votre propriété en valeur et la vendre au meilleur prix, sans stress.", href: "/vendre-acheter#vendre" },
+              { icon: Tag, t: "Vendre", d: "Mettre votre propriété en valeur et maximiser son potentiel grâce à une mise en marché stratégique.", href: "/vendre-acheter#vendre" },
               { icon: LineChart, t: "Investir", d: "Repérer les bonnes occasions et bâtir un patrimoine immobilier rentable.", href: "/vendre-acheter#acheter" },
               { icon: Calculator, t: "Valeur marchande", d: "Connaître la juste valeur actuelle de votre propriété, gratuitement et sans engagement.", href: "/contact?sujet=vendre" },
             ].map((step) => (
@@ -305,7 +305,7 @@ export default async function HomePage() {
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="mx-auto mt-8 max-w-4xl font-display text-[clamp(2.4rem,5.5vw,4.6rem)] font-light leading-[1.08] text-ink">
-              Prêt à réaliser votre projet&nbsp;?
+              Le premier pas commence ici.
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
