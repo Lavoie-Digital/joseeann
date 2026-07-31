@@ -56,8 +56,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: SITE.ogImage,
-        width: 2048,
-        height: 1365,
+        width: 1200,
+        height: 630,
         alt: "Josée-Ann Jomphe, courtier immobilier au Saguenay",
       },
     ],

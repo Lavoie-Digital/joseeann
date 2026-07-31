@@ -20,7 +20,7 @@ export const SITE = {
   phoneDisplay: "581 306-1902",
   email: "info@jajomphe.ca",
   // Image partagée par défaut (Open Graph / réseaux sociaux) — format paysage.
-  ogImage: "/onglet3.jpg",
+  ogImage: "/og-image.jpg",
   description:
     "Josée-Ann Jomphe, courtier immobilier résidentiel et commercial au Saguenay–Lac-Saint-Jean. Un accompagnement humain et rigoureux pour vendre, acheter et investir.",
   sameAs: [
