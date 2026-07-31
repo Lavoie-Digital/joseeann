@@ -105,7 +105,7 @@ export default function AProposPage() {
           <Stagger className="grid grid-cols-2 gap-y-10 lg:grid-cols-3">
             {[
               { v: "45 M$+", l: "en transactions" },
-              { v: "175+", l: "familles accompagnées" },
+              { v: "200+", l: "familles accompagnées" },
               { v: "5 ans+", l: "d'expérience" },
             ].map((s) => (
               <StaggerItem key={s.l} className="text-center">

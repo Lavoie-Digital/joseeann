@@ -94,8 +94,8 @@ export function GuideGate() {
           Recevez le guide du vendeur
         </h3>
         <p className="mt-3 max-w-2xl leading-relaxed text-smoke">
-          18 pages pour bien préparer votre propriété, fixer le juste prix et
-          comprendre chaque étape de la vente — de l&apos;évaluation à la
+          18 pages pour bien préparer votre propriété, établir le juste prix et
+          comprendre chaque étape de la vente, de l&apos;évaluation à la
           signature chez le notaire.
         </p>
         <button

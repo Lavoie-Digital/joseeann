@@ -17,20 +17,29 @@ const PROPERTY_TYPES = [
 ];
 
 const SECTORS = [
-  "Saguenay (Chicoutimi, Jonquière, La Baie)",
+  "Jonquière",
+  "Arvida",
+  "Chicoutimi",
+  "Laterrière",
+  "Lac Kénogami",
+  "Shipshaw",
+  "St-Ambroise",
+  "La Baie",
+  "St-Honoré",
   "Alma",
-  "Dolbeau-Mistassini",
   "Ailleurs au Lac-Saint-Jean",
-  "Peu importe le secteur",
+  "Autre",
 ];
 
 const BEDROOMS = ["1", "2", "3", "4", "5 et plus", "Peu importe"];
 
 const BUDGETS = [
   "200 000 $ et moins",
-  "200 000 $ – 350 000 $",
-  "350 000 $ – 500 000 $",
-  "500 000 $ et plus",
+  "200 000 $ – 300 000 $",
+  "300 000 $ – 400 000 $",
+  "400 000 $ – 500 000 $",
+  "500 000 $ – 600 000 $",
+  "700 000 $ et plus",
 ];
 
 const TIMELINES = [
@@ -45,6 +54,12 @@ export function AlertForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [message, setMessage] = useState("");
+  const [sectors, setSectors] = useState<string[]>([]);
+
+  const toggleSector = (s: string) =>
+    setSectors((prev) =>
+      prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s],
+    );
   // Instant d'affichage du formulaire — sert au piège temporel anti-robot.
   const mountedAt = useRef(0);
   useEffect(() => {
@@ -66,6 +81,7 @@ export function AlertForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
+          sector: sectors.length ? sectors.join(", ") : undefined,
           contactMe: data.contactMe === "on",
           elapsedMs: Date.now() - mountedAt.current,
         }),
@@ -75,6 +91,7 @@ export function AlertForm() {
       if (res.ok && json.ok) {
         setStatus("success");
         form.reset();
+        setSectors([]);
       } else if (res.status === 422 && json.errors) {
         setErrors(json.errors);
         setStatus("error");
@@ -142,7 +159,7 @@ export function AlertForm() {
         </div>
         <div>
           <label className="eyebrow text-clay">Téléphone</label>
-          <input name="phone" type="tel" className={`mt-2 ${inputCls}`} placeholder="514 000-0000" />
+          <input name="phone" type="tel" className={`mt-2 ${inputCls}`} placeholder="418 000-0000" />
         </div>
         <div>
           <label className="eyebrow text-clay">Type de propriété</label>
@@ -152,13 +169,24 @@ export function AlertForm() {
             ))}
           </select>
         </div>
-        <div>
-          <label className="eyebrow text-clay">Secteur recherché</label>
-          <select name="sector" defaultValue={SECTORS[0]} className={`mt-2 ${inputCls}`}>
+        <div className="sm:col-span-2">
+          <label className="eyebrow text-clay">Secteurs recherchés</label>
+          <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3">
             {SECTORS.map((s) => (
-              <option key={s} value={s}>{s}</option>
+              <label
+                key={s}
+                className="flex cursor-pointer items-center gap-2.5 text-sm text-charcoal"
+              >
+                <input
+                  type="checkbox"
+                  checked={sectors.includes(s)}
+                  onChange={() => toggleSector(s)}
+                  className="h-4 w-4 shrink-0 accent-ink"
+                />
+                {s}
+              </label>
             ))}
-          </select>
+          </div>
         </div>
         <div>
           <label className="eyebrow text-clay">Chambres</label>

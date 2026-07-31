@@ -24,11 +24,11 @@ export const metadata: Metadata = {
 };
 
 const SELL_STEPS = [
-  { t: "Déterminer la juste valeur marchande de votre propriété", d: "Une analyse rigoureuse du marché et des ventes comparables pour fixer le bon prix, dès le départ." },
-  { t: "Préparer votre propriété pour maximiser son potentiel", d: "Home staging, petites rénovations stratégiques et photographie professionnelle pour créer le coup de cœur." },
-  { t: "Déployer une stratégie de mise en marché performante", d: "Diffusion sur Centris®, réseaux sociaux et réseau d'acheteurs — pour rejoindre les bonnes personnes." },
-  { t: "Attirer des acheteurs qualifiés et gérer les visites", d: "Filtrage des acheteurs sérieux, organisation des visites et suivi rigoureux après chacune d'elles." },
-  { t: "Négocier la meilleure entente et vous accompagner jusqu'à la vente", d: "Défense de vos intérêts à la table de négociation, puis suivi complet jusqu'à la signature chez le notaire." },
+  { t: "Évaluer la juste valeur de votre propriété", d: "Analyse du marché et des ventes comparables pour positionner votre propriété au juste prix." },
+  { t: "Préparer votre propriété pour la vente", d: "Conseils, home staging et photographie professionnelle pour créer un véritable coup de cœur." },
+  { t: "Mettre votre propriété en marché", d: "Une visibilité maximale sur Centris®, mes réseaux sociaux et auprès de mon réseau d'acheteurs." },
+  { t: "Organiser les visites qualifiées", d: "Qualification des acheteurs, organisation des visites et suivi après chacune d'elles." },
+  { t: "Conclure la vente dans les meilleures conditions", d: "Négociation stratégique et accompagnement complet jusqu'à la signature chez le notaire." },
 ];
 
 const SELL_RESOURCES = [
@@ -39,11 +39,11 @@ const SELL_RESOURCES = [
 ];
 
 const BUY_STEPS = [
-  { t: "Établir votre budget et obtenir une préautorisation", d: "On clarifie votre capacité d'emprunt avec les bons partenaires afin de magasiner en toute confiance." },
+  { t: "Obtenir votre préqualification et définir votre budget", d: "On clarifie votre capacité d'emprunt avec les bons partenaires afin de magasiner en toute confiance." },
   { t: "Définir vos critères et cibler les bons secteurs", d: "Type de propriété, quartiers, incontournables et compromis : on précise ensemble ce qui compte vraiment." },
-  { t: "Repérer les meilleures opportunités du marché", d: "Accès aux inscriptions Centris® et aux occasions dès leur mise en marché, avant qu'elles ne s'envolent." },
-  { t: "Visiter avec un regard stratégique", d: "On évalue le potentiel réel, les travaux à prévoir et la juste valeur — sans se laisser emporter par l'émotion." },
-  { t: "Présenter une offre solide et négocier les meilleures conditions", d: "Rédaction d'une offre gagnante, conditions bien encadrées et accompagnement jusqu'à la remise des clés." },
+  { t: "Repérer les meilleures opportunités du marché", d: "Accès aux nouvelles inscriptions et occasions à saisir dès leur mise en marché." },
+  { t: "Visiter avec un regard stratégique", d: "J'évalue avec vous le potentiel de chaque propriété, les travaux à prévoir et sa juste valeur afin que vous preniez une décision éclairée." },
+  { t: "Présenter une offre solide et négocier les meilleures conditions", d: "Une offre solide, une négociation rigoureuse et un accompagnement complet jusqu'à la signature chez le notaire et la remise des clés." },
 ];
 
 const BUY_RESOURCES = [
@@ -60,7 +60,7 @@ function Steps({ steps }: { steps: { t: string; d: string }[] }) {
         <StaggerItem key={s.t}>
           <div className="grid gap-3 border-t border-taupe/30 py-7 md:grid-cols-12 md:gap-8">
             <div className="md:col-span-2">
-              <span className="font-display text-4xl font-light text-gilt">
+              <span className="font-display text-4xl font-light text-ink">
                 {String(i + 1).padStart(2, "0")}
               </span>
             </div>
@@ -158,7 +158,7 @@ export default function VendreAcheterPage() {
 
           <div className="mt-16">
             <Reveal>
-              <p className="eyebrow text-clay">Votre plan vers une vente réussie</p>
+              <p className="eyebrow text-clay">Comment je vous accompagne pour une vente réussie</p>
             </Reveal>
             <Steps steps={SELL_STEPS} />
           </div>
@@ -219,8 +219,8 @@ export default function VendreAcheterPage() {
               <Reveal delay={0.2}>
                 <p className="mt-6 leading-relaxed text-smoke">
                   De la préautorisation à la remise des clés, un accompagnement
-                  stratégique pour faire le bon choix, au bon moment — et vivre
-                  l&apos;expérience pleinement.
+                  stratégique pour faire le bon choix, au bon moment afin de
+                  vivre l&apos;expérience pleinement.
                 </p>
               </Reveal>
               <Reveal delay={0.3}>
@@ -239,7 +239,7 @@ export default function VendreAcheterPage() {
           <div className="mt-16">
             <Reveal>
               <p className="eyebrow text-clay">
-                Votre parcours vers la bonne propriété
+                Comment je vous accompagne vers la bonne propriété
               </p>
             </Reveal>
             <Steps steps={BUY_STEPS} />

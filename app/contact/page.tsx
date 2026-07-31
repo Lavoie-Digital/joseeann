@@ -32,8 +32,7 @@ export default function ContactPage() {
               <p className="mt-6 max-w-md text-base leading-relaxed text-smoke">
                 Chaque grand projet commence par une simple conversation.
                 Écrivez-moi et voyons ensemble comment je peux vous aider à
-                réaliser le vôtre — je vous reviens personnellement, généralement
-                en moins de 24 heures.
+                réaliser le vôtre.
               </p>
             </Reveal>
 

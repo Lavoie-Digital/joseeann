@@ -136,7 +136,7 @@ export function ContactForm() {
         </div>
         <div>
           <label className="eyebrow text-clay">Téléphone</label>
-          <input name="phone" type="tel" className={`mt-2 ${inputCls}`} placeholder="514 000-0000" />
+          <input name="phone" type="tel" className={`mt-2 ${inputCls}`} placeholder="418 000-0000" />
         </div>
         <div>
           <label className="eyebrow text-clay">Sujet</label>
