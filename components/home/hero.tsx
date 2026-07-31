@@ -108,12 +108,12 @@ export function Hero() {
       />
 
       {/* Contenu centré */}
-      <div className="relative z-10 flex flex-col items-center px-6 pb-8 pt-12 text-center sm:pb-16 sm:pt-24">
+      <div className="relative z-10 flex flex-col items-center px-6 pb-8 pt-12 text-center sm:pb-10 sm:pt-16">
         <motion.div
           initial={{ opacity: 0, y: 28, scale: 0.94 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1.5, ease: EASE, delay: 0.45 }}
-          className="w-[min(44vw,440px)] drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
+          className="w-[min(44vw,440px)] drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)] md:w-[min(30vw,320px)]"
         >
           <Image
             src="/logo-mark-light.png"
@@ -129,14 +129,14 @@ export function Hero() {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1.2, ease: EASE, delay: 1 }}
-          className="mt-5 block h-px w-40 origin-center bg-gradient-to-r from-transparent via-gilt to-transparent sm:mt-9"
+          className="mt-5 block h-px w-40 origin-center bg-gradient-to-r from-transparent via-gilt to-transparent sm:mt-6"
         />
 
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: EASE, delay: 1.15 }}
-          className="mt-4 max-w-2xl font-display text-[clamp(1.4rem,3.6vw,3rem)] font-light leading-[1.2] text-bone sm:mt-8"
+          className="mt-4 max-w-2xl font-display text-[clamp(1.4rem,3.2vw,2.6rem)] font-light leading-[1.2] text-bone sm:mt-5"
         >
           Au-delà de l&apos;immobilier, il y a des décisions qui changent une
           vie.
@@ -146,7 +146,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: EASE, delay: 1.25 }}
-          className="mt-3 max-w-2xl text-sm leading-snug text-bone/80 sm:mt-7 sm:text-base sm:leading-relaxed"
+          className="mt-3 max-w-2xl text-sm leading-snug text-bone/80 sm:mt-4 sm:text-base sm:leading-relaxed"
         >
           Je suis Josée-Ann Jomphe, courtier immobilier résidentiel et
           commercial au Saguenay. Depuis plus de 5 ans, j&apos;aide mes clients
@@ -160,7 +160,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: EASE, delay: 1.4 }}
-          className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:mt-11 sm:gap-4"
+          className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:mt-7 sm:gap-4"
         >
           <Link
             href="/proprietes"
@@ -184,7 +184,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: EASE, delay: 1.6 }}
-          className="mt-4 sm:mt-8"
+          className="mt-4 sm:mt-6"
         >
           <GoogleBadge tone="dark" />
         </motion.div>
