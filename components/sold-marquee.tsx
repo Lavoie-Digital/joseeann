@@ -67,7 +67,13 @@ export function SoldMarquee() {
     // On coupe le défilement auto le temps de l'animation, sinon les deux
     // écritures sur scrollLeft se battent et le clic semble ne rien faire.
     pauseFor(RESUME_DELAY);
-    trackRef.current?.scrollBy({ left: dir * CARD_STEP, behavior: "smooth" });
+    const track = trackRef.current;
+    if (!track) return;
+    // Pas réel = largeur d'une carte + l'espacement, pour s'arrêter pile
+    // sur une photo (varie selon la taille d'écran).
+    const first = track.firstElementChild as HTMLElement | null;
+    const step = first ? first.offsetWidth + 20 : CARD_STEP;
+    track.scrollBy({ left: dir * step, behavior: "smooth" });
   };
 
   const arrowBtn =
@@ -102,7 +108,7 @@ export function SoldMarquee() {
           {loop.map((src, i) => (
             <div
               key={`${src}-${i}`}
-              className="relative h-56 w-72 shrink-0 snap-start overflow-hidden rounded-sm sm:h-64 sm:w-96"
+              className="relative h-56 w-72 shrink-0 snap-center overflow-hidden rounded-sm sm:h-64 sm:w-96"
             >
               <Image
                 src={src}
