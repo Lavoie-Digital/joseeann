@@ -90,12 +90,30 @@ export default async function ArticlePage({
               </div>
             </Reveal>
 
-            <div className="mt-12">
+            {/* flex flex-col + marge portée par le wrapper (l'item flex) :
+                les marges ne s'effondrent pas, donc les gros titres gardent
+                bien leur espace au-dessus comme en dessous. */}
+            <div className="mt-12 flex flex-col">
               {article.blocks.map((b, i) => {
+                // Espace au-dessus de chaque bloc (plus généreux pour les titres).
+                const afterH2 = i > 0 && article.blocks[i - 1].type === "h2";
+                const top =
+                  i === 0
+                    ? ""
+                    : b.type === "h2"
+                      ? "mt-16"
+                      : b.type === "h3"
+                        ? afterH2
+                          ? "mt-10"
+                          : "mt-11"
+                        : afterH2
+                          ? "mt-8"
+                          : "mt-5";
+
                 if (b.type === "h2") {
                   return (
-                    <Reveal key={i}>
-                      <h2 className="mt-14 font-display text-[clamp(1.7rem,3vw,2.4rem)] font-light leading-tight text-ink first:mt-0">
+                    <Reveal key={i} className={top}>
+                      <h2 className="font-display text-[clamp(1.7rem,3vw,2.4rem)] font-light leading-tight text-ink">
                         {b.text}
                       </h2>
                     </Reveal>
@@ -103,8 +121,8 @@ export default async function ArticlePage({
                 }
                 if (b.type === "h3") {
                   return (
-                    <Reveal key={i}>
-                      <h3 className="mt-9 font-display text-xl font-light text-ink lg:text-2xl">
+                    <Reveal key={i} className={top}>
+                      <h3 className="font-display text-xl font-light text-ink lg:text-2xl">
                         {b.text}
                       </h3>
                     </Reveal>
@@ -112,8 +130,8 @@ export default async function ArticlePage({
                 }
                 if (b.type === "ul") {
                   return (
-                    <Reveal key={i}>
-                      <ul className="mt-5 space-y-3">
+                    <Reveal key={i} className={top}>
+                      <ul className="space-y-3">
                         {b.items.map((it) => (
                           <li
                             key={it}
@@ -128,8 +146,8 @@ export default async function ArticlePage({
                   );
                 }
                 return (
-                  <Reveal key={i}>
-                    <p className="mt-5 text-[1.05rem] leading-[1.8] text-charcoal">
+                  <Reveal key={i} className={top}>
+                    <p className="text-[1.05rem] leading-[1.8] text-charcoal">
                       {b.text}
                     </p>
                   </Reveal>
