@@ -104,7 +104,7 @@ export default async function HomePage() {
       <section className="bg-bone py-20 lg:py-28">
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-8">
               <Reveal>
                 <Eyebrow>Pourquoi travailler avec moi&nbsp;?</Eyebrow>
               </Reveal>
@@ -114,8 +114,31 @@ export default async function HomePage() {
                   <span className="italic text-gilt">différence</span>.
                 </p>
               </Reveal>
+
+              {/* Les 4 piliers — remontés à côté de la photo */}
+              <Stagger className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2">
+                {[
+                  { icon: HandHeart, t: "Bienveillance", d: "Prendre le temps de vous écouter, de comprendre vos besoins et de vous accompagner à chaque étape." },
+                  { icon: ShieldCheck, t: "Rigueur", d: "Porter une attention particulière à chaque détail afin de protéger vos intérêts et assurer le bon déroulement de votre transaction." },
+                  { icon: Eye, t: "Transparence", d: "Offrir des conseils honnêtes, une communication claire et toute l'information nécessaire pour prendre des décisions éclairées." },
+                  { icon: Scale, t: "Intégrité", d: "Agir avec honnêteté, éthique et professionnalisme, en mettant toujours vos intérêts au premier plan." },
+                ].map((v) => (
+                  <StaggerItem key={v.t}>
+                    <div className="border-t border-taupe/40 pt-6">
+                      <v.icon strokeWidth={1.2} className="h-8 w-8 text-gilt" />
+                      <h3 className="mt-5 font-display text-2xl font-light text-ink">
+                        {v.t}
+                      </h3>
+                      <p className="mt-3 text-sm leading-relaxed text-smoke">
+                        {v.d}
+                      </p>
+                    </div>
+                  </StaggerItem>
+                ))}
+              </Stagger>
+
               <Reveal delay={0.3}>
-                <div className="mt-10">
+                <div className="mt-12">
                   <ButtonLink href="/a-propos" variant="outline">
                     Faire connaissance
                   </ButtonLink>
@@ -123,14 +146,14 @@ export default async function HomePage() {
               </Reveal>
             </div>
 
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-4">
               <Reveal delay={0.15}>
                 <div className="relative aspect-[4/5] overflow-hidden">
                   <Image
                     src="/courtiere.jpg"
                     alt="Josée-Ann Jomphe, courtier immobilier"
                     fill
-                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    sizes="(max-width: 1024px) 100vw, 33vw"
                     className="img-warm object-cover object-top"
                   />
                 </div>
@@ -145,28 +168,6 @@ export default async function HomePage() {
               </Reveal>
             </div>
           </div>
-
-          {/* Les 4 piliers */}
-          <Stagger className="mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              { icon: HandHeart, t: "Bienveillance", d: "Prendre le temps de vous écouter, de comprendre vos besoins et de vous accompagner à chaque étape." },
-              { icon: ShieldCheck, t: "Rigueur", d: "Porter une attention particulière à chaque détail afin de protéger vos intérêts et assurer le bon déroulement de votre transaction." },
-              { icon: Eye, t: "Transparence", d: "Offrir des conseils honnêtes, une communication claire et toute l'information nécessaire pour prendre des décisions éclairées." },
-              { icon: Scale, t: "Intégrité", d: "Agir avec honnêteté, éthique et professionnalisme, en mettant toujours vos intérêts au premier plan." },
-            ].map((v) => (
-              <StaggerItem key={v.t}>
-                <div className="border-t border-taupe/40 pt-6">
-                  <v.icon strokeWidth={1.2} className="h-8 w-8 text-gilt" />
-                  <h3 className="mt-5 font-display text-2xl font-light text-ink">
-                    {v.t}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-smoke">
-                    {v.d}
-                  </p>
-                </div>
-              </StaggerItem>
-            ))}
-          </Stagger>
         </Container>
       </section>
 
