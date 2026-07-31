@@ -108,7 +108,7 @@ export function Hero() {
       />
 
       {/* Contenu centré */}
-      <div className="relative z-10 flex flex-col items-center px-6 pb-8 pt-12 text-center sm:pb-10 sm:pt-16">
+      <div className="relative z-10 flex flex-col items-center px-6 pb-8 pt-20 text-center sm:pb-8 sm:pt-28">
         <motion.div
           initial={{ opacity: 0, y: 28, scale: 0.94 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
