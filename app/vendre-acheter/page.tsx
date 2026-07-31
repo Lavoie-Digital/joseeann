@@ -14,6 +14,7 @@ import {
   ListChecks,
   Search,
   ArrowDown,
+  ArrowUpRight,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -32,10 +33,9 @@ const SELL_STEPS = [
 ];
 
 const SELL_RESOURCES = [
-  { icon: ClipboardList, t: "Check-list : préparer votre maison" },
-  { icon: Home, t: "Guide du vendeur" },
-  { icon: Truck, t: "Check-list de déménagement" },
-  { icon: FileText, t: "Documents à préparer" },
+  { icon: ClipboardList, t: "Check-list : préparer votre maison", href: "/conseils/checklists/preparer-maison-avant-vente" },
+  { icon: Truck, t: "Check-list de déménagement", href: "/conseils/checklists/demenagement-etape-par-etape" },
+  { icon: FileText, t: "Documents à préparer", href: "/conseils/checklists/documents-pour-vendre" },
 ];
 
 const BUY_STEPS = [
@@ -46,11 +46,13 @@ const BUY_STEPS = [
   { t: "Présenter une offre solide et négocier les meilleures conditions", d: "Une offre solide, une négociation rigoureuse et un accompagnement complet jusqu'à la signature chez le notaire et la remise des clés." },
 ];
 
+const ACHETEUR_PAGES = Array.from({ length: 16 }, (_, i) => `/ga${i + 1}.png`);
+
 const BUY_RESOURCES = [
-  { icon: Wallet, t: "Calculer votre capacité d'emprunt" },
-  { icon: ListChecks, t: "Check-list du premier acheteur" },
-  { icon: Search, t: "Check-list de visite" },
-  { icon: Truck, t: "Check-list de déménagement" },
+  { icon: Wallet, t: "Calculer votre capacité d'emprunt", href: "/conseils#calculatrice" },
+  { icon: ListChecks, t: "Check-list du premier acheteur", href: "/conseils/checklists/acheter-une-propriete" },
+  { icon: Search, t: "Check-list de visite", href: "/conseils/checklists/visite-dune-propriete" },
+  { icon: Truck, t: "Check-list de déménagement", href: "/conseils/checklists/demenagement-acheteur" },
 ];
 
 function Steps({ steps }: { steps: { t: string; d: string }[] }) {
@@ -78,18 +80,40 @@ function Steps({ steps }: { steps: { t: string; d: string }[] }) {
 function Resources({
   items,
 }: {
-  items: { icon: typeof Home; t: string }[];
+  items: { icon: typeof Home; t: string; href?: string }[];
 }) {
   return (
     <Stagger className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {items.map((r) => (
-        <StaggerItem key={r.t}>
-          <div className="flex h-full items-center gap-4 border border-taupe/30 bg-bone/60 p-5">
+      {items.map((r) => {
+        const inner = (
+          <>
             <r.icon strokeWidth={1.2} className="h-6 w-6 shrink-0 text-gilt" />
             <p className="text-sm leading-snug text-charcoal">{r.t}</p>
-          </div>
-        </StaggerItem>
-      ))}
+            {r.href && (
+              <ArrowUpRight
+                strokeWidth={1.4}
+                className="ml-auto h-4 w-4 shrink-0 text-taupe transition-colors group-hover:text-gilt"
+              />
+            )}
+          </>
+        );
+        return (
+          <StaggerItem key={r.t}>
+            {r.href ? (
+              <Link
+                href={r.href}
+                className="group flex h-full items-center gap-4 border border-taupe/30 bg-bone/60 p-5 transition-colors hover:border-gilt"
+              >
+                {inner}
+              </Link>
+            ) : (
+              <div className="flex h-full items-center gap-4 border border-taupe/30 bg-bone/60 p-5">
+                {inner}
+              </div>
+            )}
+          </StaggerItem>
+        );
+      })}
     </Stagger>
   );
 }
@@ -192,22 +216,22 @@ export default function VendreAcheterPage() {
       {/* ACHETER */}
       <section id="acheter" className="scroll-mt-20 bg-sand py-24 lg:py-32">
         <Container>
-          <div className="grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-16">
-            <div className="lg:col-span-7">
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-10">
+            <div className="lg:col-span-6">
               <Reveal>
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="relative aspect-[4/5] w-full overflow-hidden">
                   <Image
-                    src="/images/lifestyle-family.jpg"
-                    alt="Famille souriante s'amusant dans leur nouveau chez-soi"
+                    src="/famille1.jpg"
+                    alt="Josée-Ann Jomphe, courtier immobilier, dans une cuisine lumineuse"
                     fill
-                    sizes="(max-width: 1024px) 100vw, 55vw"
+                    sizes="(max-width: 1024px) 90vw, 50vw"
                     className="img-warm object-cover"
                   />
                 </div>
               </Reveal>
             </div>
 
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-6">
               <Reveal delay={0.1}>
                 <Eyebrow>Acheter</Eyebrow>
               </Reveal>
@@ -262,6 +286,20 @@ export default function VendreAcheterPage() {
                   Créer une alerte propriété
                 </ButtonLink>
               </div>
+            </Reveal>
+          </div>
+
+          <div className="mt-14">
+            <Reveal>
+              <GuideGate
+                guide="Guide de l'acheteur"
+                pages={ACHETEUR_PAGES}
+                heading="Recevez le guide de l'acheteur"
+                description="16 pages pour préparer votre achat en toute confiance, du budget et de la préautorisation jusqu'à la visite, l'offre et la remise des clés."
+                unlockedLabel="Feuilletez mon guide de l'acheteur"
+                source="/vendre-acheter#acheter"
+                cardClassName="border-gilt/30 bg-gilt/10"
+              />
             </Reveal>
           </div>
         </Container>

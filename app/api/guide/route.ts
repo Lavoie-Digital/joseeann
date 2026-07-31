@@ -18,6 +18,10 @@ import sgMail from "@sendgrid/mail";
 interface GuidePayload {
   name?: string;
   email?: string;
+  // Guide demandé (« Guide du vendeur » / « Guide de l'acheteur »).
+  guide?: string;
+  // Page d'origine de la demande.
+  source?: string;
   // Champ anti-pourriel (honeypot) : doit rester vide.
   company?: string;
   // Temps de remplissage en ms (piège temporel anti-robot).
@@ -52,6 +56,9 @@ export async function POST(req: Request) {
 
   const name = (body.name ?? "").trim();
   const email = (body.email ?? "").trim();
+  const guide = (body.guide ?? "Guide du vendeur").trim() || "Guide du vendeur";
+  const source =
+    (body.source ?? "/vendre-acheter#vendre").trim() || "/vendre-acheter#vendre";
 
   const errors: Record<string, string> = {};
   if (name.length < 2) errors.name = "Nom requis.";
@@ -89,8 +96,8 @@ export async function POST(req: Request) {
   const leadText =
     `Nom: ${name}\n` +
     `Courriel: ${email}\n` +
-    `Demande: Guide du vendeur\n` +
-    `Source: jajomphe.ca — /vendre-acheter#vendre\n` +
+    `Demande: ${guide}\n` +
+    `Source: jajomphe.ca — ${source}\n` +
     `Date: ${nowIso}\n`;
 
   const row = (label: string, value: string) =>
@@ -101,8 +108,8 @@ export async function POST(req: Request) {
     `<table style="font-family:Arial,sans-serif;font-size:14px;color:#111;border-collapse:collapse">` +
     row("Nom", name) +
     row("Courriel", email) +
-    row("Demande", "Guide du vendeur") +
-    row("Source", "jajomphe.ca — /vendre-acheter#vendre") +
+    row("Demande", guide) +
+    row("Source", `jajomphe.ca — ${source}`) +
     row("Date", nowIso) +
     `</table>`;
 
@@ -111,7 +118,7 @@ export async function POST(req: Request) {
     to: parseur,
     from: { email: from, name: "Site Josée-Ann Jomphe" },
     replyTo: { email, name },
-    subject: `Nouveau lead site web — Guide du vendeur`,
+    subject: `Nouveau lead site web — ${guide}`,
     text: leadText,
     html: tableHtml,
   };
@@ -121,13 +128,13 @@ export async function POST(req: Request) {
     to,
     from: { email: from, name: "Site Josée-Ann Jomphe" },
     replyTo: { email, name },
-    subject: `Nouveau lead — Guide du vendeur`,
+    subject: `Nouveau lead — ${guide}`,
     text: leadText,
     html: `
       <div style="font-family:Georgia,serif;color:#16130f;max-width:560px">
-        <h2 style="font-weight:400">Demande du guide du vendeur</h2>
-        <p>Ce visiteur a demandé le guide du vendeur et l&apos;a consulté
-        directement sur le site.</p>
+        <h2 style="font-weight:400">Demande du ${escapeHtml(guide.toLowerCase())}</h2>
+        <p>Ce visiteur a demandé le ${escapeHtml(guide.toLowerCase())} et l&apos;a
+        consulté directement sur le site.</p>
         ${tableHtml}
       </div>`,
   };

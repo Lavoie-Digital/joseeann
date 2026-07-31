@@ -13,17 +13,26 @@ import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const PAGES = Array.from({ length: 18 }, (_, i) => `/GV${i + 1}.png`);
-const TOTAL = PAGES.length;
+const VENDEUR_PAGES = Array.from({ length: 18 }, (_, i) => `/GV${i + 1}.png`);
 
-export function GuideViewer() {
+export function GuideViewer({
+  pages = VENDEUR_PAGES,
+  label = "Guide du vendeur",
+}: {
+  pages?: string[];
+  label?: string;
+} = {}) {
+  const TOTAL = pages.length;
   const reduce = useReducedMotion();
   const [[index, direction], setState] = useState<[number, number]>([0, 0]);
   const [zoom, setZoom] = useState(false);
 
-  const paginate = useCallback((dir: number) => {
-    setState(([i]) => [(i + dir + TOTAL) % TOTAL, dir]);
-  }, []);
+  const paginate = useCallback(
+    (dir: number) => {
+      setState(([i]) => [(i + dir + TOTAL) % TOTAL, dir]);
+    },
+    [TOTAL],
+  );
 
   const goTo = useCallback(
     (target: number) => {
@@ -110,8 +119,8 @@ export function GuideViewer() {
               className="absolute inset-0 cursor-zoom-in active:cursor-grabbing"
             >
               <Image
-                src={PAGES[index]}
-                alt={`Guide du vendeur — page ${index + 1} sur ${TOTAL}`}
+                src={pages[index]}
+                alt={`${label} — page ${index + 1} sur ${TOTAL}`}
                 fill
                 sizes="(max-width: 768px) 90vw, 40vw"
                 className="pointer-events-none select-none object-contain"
@@ -169,7 +178,7 @@ export function GuideViewer() {
 
       {/* Repères de pages */}
       <div className="mt-4 flex flex-wrap gap-1.5">
-        {PAGES.map((_, i) => (
+        {pages.map((_, i) => (
           <button
             key={i}
             type="button"
@@ -241,8 +250,8 @@ export function GuideViewer() {
             >
               <div className="relative h-full w-full">
                 <Image
-                  src={PAGES[index]}
-                  alt={`Guide du vendeur — page ${index + 1} sur ${TOTAL}`}
+                  src={pages[index]}
+                  alt={`${label} — page ${index + 1} sur ${TOTAL}`}
                   fill
                   sizes="95vw"
                   className="select-none object-contain"

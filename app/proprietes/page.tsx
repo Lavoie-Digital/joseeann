@@ -68,7 +68,7 @@ export default async function ProprietesPage() {
                 <p className="mt-6 max-w-md leading-relaxed text-smoke">
                   Précisez vos critères et soyez avisé personnellement dès
                   qu&apos;une propriété correspondante se présente sur le
-                  marché — simple, rapide, sans engagement.
+                  marché.
                 </p>
               </Reveal>
             </div>

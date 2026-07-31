@@ -9,13 +9,31 @@ type Status = "idle" | "loading" | "error";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+const VENDEUR_PAGES = Array.from({ length: 18 }, (_, i) => `/GV${i + 1}.png`);
+
 /**
- * Bloc « Guide du vendeur » — remplace l'aperçu feuilletable affiché en
- * permanence : une section explicative avec un bouton qui ouvre un court
- * formulaire (nom + courriel). Les coordonnées partent vers le CRM et, en
- * échange, le guide se déploie directement sur la page.
+ * Bloc « Guide » (vendeur ou acheteur) — une section explicative avec un
+ * bouton qui ouvre un court formulaire (nom + courriel). Les coordonnées
+ * partent vers le CRM et, en échange, le guide feuilletable se déploie
+ * directement sur la page.
  */
-export function GuideGate() {
+export function GuideGate({
+  guide = "Guide du vendeur",
+  pages = VENDEUR_PAGES,
+  heading = "Recevez le guide du vendeur",
+  description = "18 pages pour bien préparer votre propriété, établir le juste prix et comprendre chaque étape de la vente, de l'évaluation à la signature chez le notaire.",
+  unlockedLabel = "Feuilletez mon guide du vendeur",
+  source = "/vendre-acheter#vendre",
+  cardClassName = "border-taupe/30 bg-sand/50",
+}: {
+  guide?: string;
+  pages?: string[];
+  heading?: string;
+  description?: string;
+  unlockedLabel?: string;
+  source?: string;
+  cardClassName?: string;
+} = {}) {
   const [open, setOpen] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
@@ -49,6 +67,8 @@ export function GuideGate() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
+          guide,
+          source,
           elapsedMs: Date.now() - mountedAt.current,
         }),
       });
@@ -75,9 +95,9 @@ export function GuideGate() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: EASE }}
       >
-        <p className="eyebrow text-clay">Feuilletez mon guide du vendeur</p>
+        <p className="eyebrow text-clay">{unlockedLabel}</p>
         <div className="mt-8 max-w-md">
-          <GuideViewer />
+          <GuideViewer pages={pages} label={guide} />
         </div>
       </motion.div>
     );
@@ -88,15 +108,13 @@ export function GuideGate() {
 
   return (
     <>
-      <div className="border border-taupe/30 bg-sand/50 p-8 lg:p-10">
+      <div className={`border p-8 lg:p-10 ${cardClassName}`}>
         <BookOpen strokeWidth={1.2} className="h-8 w-8 text-gilt" />
         <h3 className="mt-5 font-display text-2xl font-light text-ink">
-          Recevez le guide du vendeur
+          {heading}
         </h3>
         <p className="mt-3 max-w-2xl leading-relaxed text-smoke">
-          18 pages pour bien préparer votre propriété, établir le juste prix et
-          comprendre chaque étape de la vente, de l&apos;évaluation à la
-          signature chez le notaire.
+          {description}
         </p>
         <button
           type="button"
@@ -138,7 +156,7 @@ export function GuideGate() {
                 <X strokeWidth={1.6} className="h-4 w-4" />
               </button>
 
-              <p className="eyebrow text-clay">Guide du vendeur</p>
+              <p className="eyebrow text-clay">{guide}</p>
               <h3 className="mt-3 font-display text-2xl font-light text-ink">
                 Où puis-je vous l&apos;envoyer&nbsp;?
               </h3>

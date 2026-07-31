@@ -75,7 +75,7 @@ export function MortgageCalculator() {
     FREQUENCIES.find((f) => f.key === freq)?.label.toLowerCase() ?? "";
 
   return (
-    <section className="border-t border-taupe/25 bg-sand py-24 lg:py-32">
+    <section id="calculatrice" className="scroll-mt-24 border-t border-taupe/25 bg-sand py-24 lg:py-32">
       <Container>
         <div className="max-w-xl">
           <Reveal>
