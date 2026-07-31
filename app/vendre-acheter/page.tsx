@@ -49,7 +49,7 @@ const BUY_STEPS = [
 const ACHETEUR_PAGES = Array.from({ length: 16 }, (_, i) => `/ga${i + 1}.png`);
 
 const BUY_RESOURCES = [
-  { icon: Wallet, t: "Calculer votre capacité d'emprunt", href: "/conseils#calculatrice" },
+  { icon: Wallet, t: "Calculatrice hypothécaire", href: "/conseils#calculatrice" },
   { icon: ListChecks, t: "Check-list du premier acheteur", href: "/conseils/checklists/acheter-une-propriete" },
   { icon: Search, t: "Check-list de visite", href: "/conseils/checklists/visite-dune-propriete" },
   { icon: Truck, t: "Check-list de déménagement", href: "/conseils/checklists/demenagement-acheteur" },
@@ -274,12 +274,6 @@ export default function VendreAcheterPage() {
               <p className="eyebrow text-clay">Ressources &amp; check-lists</p>
             </Reveal>
             <Resources items={BUY_RESOURCES} />
-            <Reveal delay={0.2}>
-              <p className="mt-8 text-sm text-clay">
-                Ces documents vous intéressent&nbsp;? Écrivez-moi et je vous les
-                fais parvenir gratuitement.
-              </p>
-            </Reveal>
             <Reveal delay={0.25}>
               <div className="mt-8">
                 <ButtonLink href="/proprietes#alerte" variant="outline">
