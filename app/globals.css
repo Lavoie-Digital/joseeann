@@ -112,3 +112,38 @@ body {
   html { scroll-behavior: auto; }
   * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
+
+/* ============================================================
+   Impression — check-lists téléchargeables en PDF
+   ============================================================ */
+@media print {
+  /* On masque la navigation, le pied de page et tout élément marqué.
+     Les feuilles imprimables n'utilisent que des <div>, jamais <header>/<footer>. */
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+    color: #16130f !important;
+  }
+  main {
+    flex: 0 0 auto !important;
+  }
+  /* La « feuille » occupe toute la largeur, sans ombre ni fond */
+  .print-sheet {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+  /* On évite de couper une section au milieu d'une page */
+  .print-avoid-break {
+    break-inside: avoid;
+  }
+  @page {
+    margin: 15mm 14mm;
+  }
+}

@@ -4,52 +4,42 @@ import Link from "next/link";
 import { Container, Eyebrow, ButtonLink, PageHero } from "@/components/ui";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { MortgageCalculator } from "@/components/conseils/mortgage-calculator";
-import { ArrowUpRight, PlayCircle, TrendingUp, KeyRound, HelpCircle } from "lucide-react";
+import { ARTICLES } from "@/lib/articles";
+import { CHECKLISTS } from "@/lib/checklists";
+import {
+  ArrowUpRight,
+  Download,
+  TrendingUp,
+  KeyRound,
+  HelpCircle,
+  Home,
+  Truck,
+  FileText,
+  Search,
+  ListChecks,
+} from "lucide-react";
+
+const CHECKLIST_ICONS = {
+  home: Home,
+  truck: Truck,
+  file: FileText,
+  key: KeyRound,
+  search: Search,
+} as const;
 
 export const metadata: Metadata = {
   title: "Conseils",
   description:
-    "Articles, vidéos, tendances et conseils pour acheteurs et vendeurs au Saguenay–Lac-Saint-Jean. Le coin conseils de Josée-Ann Jomphe. Calculatrice hypothécaire gratuite.",
+    "Articles, check-lists téléchargeables, tendances et conseils pour acheteurs et vendeurs au Saguenay–Lac-Saint-Jean. Le coin conseils de Josée-Ann Jomphe. Calculatrice hypothécaire gratuite.",
   alternates: { canonical: "/conseils" },
   openGraph: {
     title: "Conseils immobiliers & calculatrice hypothécaire · Josée-Ann Jomphe",
     description:
-      "Articles, vidéos et calculatrice hypothécaire pour acheteurs et vendeurs au Saguenay–Lac-Saint-Jean.",
+      "Articles, check-lists téléchargeables et calculatrice hypothécaire pour acheteurs et vendeurs au Saguenay–Lac-Saint-Jean.",
     url: "https://jajomphe.ca/conseils",
     type: "website",
   },
 };
-
-const ARTICLES = [
-  {
-    img: "/images/lifestyle-coffee.jpg",
-    tag: "Art de vivre",
-    title: "Habiter un quartier : ce qui fait vraiment la valeur d'un lieu",
-    excerpt:
-      "Au-delà des mètres carrés, ce sont les services, la lumière et le calme qui font le prix d'une adresse.",
-  },
-  {
-    img: "/images/kitchen-1.jpg",
-    tag: "Conseils vendeur",
-    title: "Cinq gestes qui augmentent la valeur perçue avant une vente",
-    excerpt:
-      "Des interventions simples et peu coûteuses qui transforment l'impression au premier regard.",
-  },
-  {
-    img: "/images/lifestyle-neighborhood.jpg",
-    tag: "Marché",
-    title: "Investir dans le commercial : lire un rendement sans se tromper",
-    excerpt:
-      "Taux de capitalisation, baux et emplacement : les repères essentiels d'un bon placement.",
-  },
-];
-
-// Vidéos — à remplacer par les vraies vidéos de Josée-Ann (YouTube, etc.).
-const VIDEOS = [
-  { title: "Bien préparer sa maison avant les visites", duration: "3 min" },
-  { title: "Premier achat : les erreurs à éviter", duration: "5 min" },
-  { title: "Comprendre le marché immobilier au Saguenay", duration: "4 min" },
-];
 
 const SHORTCUTS = [
   {
@@ -83,7 +73,7 @@ export default function ConseilsPage() {
             avancer.
           </>
         }
-        subtitle="Articles, vidéos et tendances du marché : une bibliothèque de contenu pensée pour vous éclairer, que vous soyez acheteur, vendeur ou simplement curieux."
+        subtitle="Articles, check-lists et tendances du marché : une bibliothèque de contenu pensée pour vous éclairer, que vous soyez acheteur, vendeur ou simplement curieux."
         image="/onglet7.jpg"
       />
 
@@ -120,7 +110,7 @@ export default function ConseilsPage() {
       {/* Calculatrice hypothécaire */}
       <MortgageCalculator />
 
-      {/* Vidéos */}
+      {/* Check-lists téléchargeables */}
       <section className="border-t border-taupe/25 bg-charcoal py-24 text-bone lg:py-32">
         <Container>
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
@@ -128,42 +118,46 @@ export default function ConseilsPage() {
               <Reveal>
                 <span className="eyebrow inline-flex items-center gap-3 text-taupe">
                   <span className="h-px w-8 bg-gilt" />
-                  En vidéo
+                  <ListChecks strokeWidth={1.4} className="h-4 w-4 text-gilt" />
+                  Mes check-lists
                 </span>
               </Reveal>
               <Reveal delay={0.1}>
                 <h2 className="mt-6 font-display text-[clamp(2rem,4vw,3.4rem)] font-light leading-tight">
-                  Mes conseils, en images.
+                  Des outils prêts à imprimer.
                 </h2>
               </Reveal>
             </div>
             <Reveal delay={0.2}>
               <p className="max-w-sm text-sm leading-relaxed text-bone/70">
-                Des capsules courtes pour comprendre l&apos;essentiel, à votre
-                rythme.
+                Des aide-mémoire complets pour ne rien oublier — à consulter en
+                ligne ou à télécharger en PDF.
               </p>
             </Reveal>
           </div>
 
-          <Stagger className="mt-14 grid gap-8 md:grid-cols-3">
-            {VIDEOS.map((v) => (
-              <StaggerItem key={v.title}>
-                <div className="group cursor-pointer">
-                  <div className="relative flex aspect-video items-center justify-center overflow-hidden bg-ink/60">
-                    <PlayCircle
-                      strokeWidth={1}
-                      className="h-14 w-14 text-bone/80 transition-transform duration-300 group-hover:scale-110"
-                    />
-                    <span className="absolute bottom-3 right-3 rounded-full bg-ink/70 px-3 py-1 text-xs text-bone/80">
-                      {v.duration}
+          <Stagger className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {CHECKLISTS.map((c) => {
+              const Icon = CHECKLIST_ICONS[c.icon];
+              return (
+                <StaggerItem key={c.slug}>
+                  <Link
+                    href={`/conseils/checklists/${c.slug}`}
+                    className="group flex h-full flex-col border border-bone/15 p-8 transition-colors hover:border-gilt"
+                  >
+                    <Icon strokeWidth={1.2} className="h-8 w-8 text-gilt" />
+                    <p className="eyebrow mt-6 text-taupe">{c.audience}</p>
+                    <h3 className="mt-2 font-display text-xl font-light leading-snug text-bone">
+                      {c.title}
+                    </h3>
+                    <span className="mt-6 inline-flex items-center gap-2 text-[0.72rem] uppercase tracking-[0.2em] text-bone/60 transition-colors group-hover:text-gilt">
+                      Consulter &amp; télécharger
+                      <Download strokeWidth={1.5} className="h-4 w-4" />
                     </span>
-                  </div>
-                  <h3 className="mt-5 font-display text-xl font-light leading-snug text-bone">
-                    {v.title}
-                  </h3>
-                </div>
-              </StaggerItem>
-            ))}
+                  </Link>
+                </StaggerItem>
+              );
+            })}
           </Stagger>
         </Container>
       </section>
@@ -192,25 +186,31 @@ export default function ConseilsPage() {
 
           <Stagger className="mt-14 grid gap-x-8 gap-y-12 md:grid-cols-3">
             {ARTICLES.map((a) => (
-              <StaggerItem key={a.title}>
-                <div>
+              <StaggerItem key={a.slug}>
+                <Link href={`/conseils/${a.slug}`} className="group block">
                   <div className="relative aspect-[4/3] overflow-hidden bg-greige">
                     <Image
                       src={a.img}
                       alt={a.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
-                      className="img-warm object-cover"
+                      className="img-warm object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
                   <p className="eyebrow mt-5 text-clay">{a.tag}</p>
-                  <h3 className="mt-3 font-display text-2xl font-light leading-snug text-ink">
-                    {a.title}
+                  <h3 className="mt-3 flex items-start justify-between gap-4 font-display text-2xl font-light leading-snug text-ink">
+                    <span className="transition-colors group-hover:text-gilt">
+                      {a.title}
+                    </span>
+                    <ArrowUpRight
+                      strokeWidth={1.4}
+                      className="mt-1 h-5 w-5 shrink-0 text-taupe transition-colors group-hover:text-gilt"
+                    />
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-smoke">
                     {a.excerpt}
                   </p>
-                </div>
+                </Link>
               </StaggerItem>
             ))}
           </Stagger>
