@@ -79,6 +79,17 @@ interface RawCentrisListing {
   ModificationTimestamp?: string;
 }
 
+/**
+ * Étiquette de cache appliquée à la réponse du flux Centris.
+ * Purgée par `revalidateTag()` depuis `/api/revalidate` — ce qui invalide
+ * du même coup toutes les pages qui dépendent du flux (accueil, propriétés,
+ * fiches, sitemap).
+ */
+export const CENTRIS_CACHE_TAG = "centris-listings";
+
+/** Durée de vie du cache du flux, en secondes (10 minutes). */
+export const CENTRIS_REVALIDATE_SECONDS = 600;
+
 /** Facteur de conversion mètres carrés → pieds carrés. */
 const SQM_TO_SQFT = 10.7639;
 
@@ -288,8 +299,15 @@ export async function syncFromCentris(): Promise<Listing[] | null> {
 
   const res = await fetch(endpoint, {
     headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
-    // Revalidation périodique — synchronisation « automatique » via ISR.
-    next: { revalidate: 3600 },
+    next: {
+      // Revalidation périodique — synchronisation « automatique » via ISR.
+      // 10 minutes : délai maximal avant qu'une nouvelle inscription (ou un
+      // changement de statut) apparaisse sur le site sans intervention.
+      revalidate: CENTRIS_REVALIDATE_SECONDS,
+      // Étiquette de cache : permet de purger ce flux à la demande depuis
+      // /api/revalidate, sans attendre l'expiration ni redéployer.
+      tags: [CENTRIS_CACHE_TAG],
+    },
   });
 
   if (!res.ok) {
