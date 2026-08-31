@@ -14,9 +14,12 @@
  * Seules les inscriptions ACTIVES (StandardStatus = 'Active') sont
  * récupérées : c'est ce qui s'affiche sur le site public.
  *
- * Remarque : le flux DDF ne renvoie pas de description publique
- * (`PublicRemarks` est vide). Une description factuelle est donc générée
- * à partir des caractéristiques de la propriété (voir `buildDescription`).
+ * Important : le flux est interrogé avec `Accept-Language: fr-CA`. Sans cet
+ * en-tête, `PublicRemarks` (le texte de vente rédigé par la courtière sur
+ * Centris) revient systématiquement `null` — c'est une particularité du DDF
+ * québécois, et non un champ absent. Les valeurs d'énumération
+ * (`PropertySubType`, `Basement`, `View`…) restent en anglais dans les deux
+ * cas, donc les correspondances ci-dessous et les slugs sont inchangés.
  */
 
 import type { Listing, ListingCategory, ListingStatus } from "./listings";
@@ -200,7 +203,20 @@ function buildHighlights(raw: RawCentrisListing): string[] {
   return h;
 }
 
-/** Description factuelle générée (le flux DDF ne fournit pas de texte public). */
+/**
+ * Texte de vente rédigé par la courtière sur Centris.
+ * Les saisies Centris contiennent souvent des doubles espaces et des espaces
+ * de fin : on normalise pour un rendu propre dans un seul paragraphe.
+ */
+function publicRemarks(raw: RawCentrisListing): string | undefined {
+  const text = raw.PublicRemarks?.replace(/\s+/g, " ").trim();
+  return text ? text : undefined;
+}
+
+/**
+ * Description factuelle générée — filet de secours uniquement, pour une
+ * inscription publiée sans texte de vente sur Centris.
+ */
 function buildDescription(raw: RawCentrisListing): string {
   const type = frPropertyType(raw).toLowerCase();
   const city = buildCity(raw);
@@ -258,7 +274,9 @@ export function normalizeListing(raw: RawCentrisListing): Listing {
     lotArea: lotAreaSqft(raw),
     yearBuilt: raw.YearBuilt,
     parking: raw.ParkingTotal != null ? Math.round(raw.ParkingTotal) : undefined,
-    description: raw.PublicRemarks?.trim() || buildDescription(raw),
+    // Priorité au texte rédigé par la courtière sur Centris ; la description
+    // générée ne sert que si l'inscription n'en a pas.
+    description: publicRemarks(raw) ?? buildDescription(raw),
     highlights: buildHighlights(raw),
     images: images.length > 0 ? images : [PLACEHOLDER_IMAGE],
     // Lien vers la fiche publique Centris.ca (et non la passerelle de la
@@ -298,7 +316,13 @@ export async function syncFromCentris(): Promise<Listing[] | null> {
   const endpoint = buildFeedUrl(url, agentId);
 
   const res = await fetch(endpoint, {
-    headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      // Indispensable pour obtenir `PublicRemarks` en français (voir en-tête
+      // de fichier) : sans cet en-tête, le DDF renvoie `null`.
+      "Accept-Language": "fr-CA",
+    },
     next: {
       // Revalidation périodique — synchronisation « automatique » via ISR.
       // 10 minutes : délai maximal avant qu'une nouvelle inscription (ou un
