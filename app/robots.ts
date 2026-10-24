@@ -11,7 +11,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "/api/",
+      disallow: ["/api/", "/espace-prive"],
     },
     sitemap: `${SITE.url}/sitemap.xml`,
     host: SITE.url,

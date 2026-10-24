@@ -141,7 +141,16 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-bone/15 pt-8 text-xs text-bone/45 md:flex-row md:items-center">
-          <p>© {year} Josée-Ann Jomphe inc. Tous droits réservés.</p>
+          <p>
+            © {year} Josée-Ann Jomphe inc. Tous droits réservés.
+            <Link
+              href="/espace-prive"
+              rel="nofollow"
+              className="ml-3 text-bone/30 transition-colors hover:text-bone"
+            >
+              Espace privé
+            </Link>
+          </p>
           <Link
             href="/politique-de-confidentialite"
             className="tracking-wide underline-offset-4 transition-colors hover:text-bone hover:underline"

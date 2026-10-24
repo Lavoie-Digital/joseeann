@@ -6,9 +6,11 @@ import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { ListingCard } from "@/components/listing-card";
 import { FaqAccordion, type FaqGroup } from "@/components/faq-accordion";
 import { Testimonials } from "@/components/reviews";
+import { Capsules } from "@/components/home/capsules";
 import { JsonLd } from "@/components/json-ld";
 import { faqJsonLd } from "@/lib/seo";
 import { getFeaturedListings } from "@/lib/listings";
+import { getCapsules } from "@/lib/capsules";
 import {
   Search,
   Tag,
@@ -49,7 +51,10 @@ const HOME_FAQ: FaqGroup[] = [
 ];
 
 export default async function HomePage() {
-  const featured = await getFeaturedListings(3);
+  const [featured, capsules] = await Promise.all([
+    getFeaturedListings(3),
+    getCapsules(),
+  ]);
 
   return (
     <>
@@ -210,6 +215,9 @@ export default async function HomePage() {
           </Stagger>
         </Container>
       </section>
+
+      {/* Capsules vidéo — gérées depuis /espace-prive, masquées si aucune */}
+      {capsules.length > 0 && <Capsules capsules={capsules} />}
 
       {/* Témoignages — avis Google */}
       <Testimonials />
