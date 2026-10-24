@@ -4,8 +4,10 @@ import Link from "next/link";
 import { Container, Eyebrow, ButtonLink, PageHero } from "@/components/ui";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { MortgageCalculator } from "@/components/conseils/mortgage-calculator";
+import { Capsules } from "@/components/home/capsules";
 import { ARTICLES } from "@/lib/articles";
 import { CHECKLISTS } from "@/lib/checklists";
+import { getCapsules } from "@/lib/capsules";
 import {
   ArrowUpRight,
   Download,
@@ -62,7 +64,9 @@ const SHORTCUTS = [
   },
 ];
 
-export default function ConseilsPage() {
+export default async function ConseilsPage() {
+  const capsules = await getCapsules();
+
   return (
     <>
       <PageHero
@@ -106,6 +110,9 @@ export default function ConseilsPage() {
           </Stagger>
         </Container>
       </section>
+
+      {/* Capsules vidéo — gérées depuis /espace-prive, masquées si aucune */}
+      {capsules.length > 0 && <Capsules capsules={capsules} />}
 
       {/* Calculatrice hypothécaire */}
       <MortgageCalculator />
