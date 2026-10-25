@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BookOpen, CheckCircle2, Loader2, Send, X } from "lucide-react";
@@ -220,8 +221,11 @@ export function GuideGate({
                 </button>
 
                 <p className="text-xs leading-relaxed text-clay">
-                  Vos renseignements demeurent strictement confidentiels et ne
-                  seront jamais partagés.
+                  Vos coordonnées sont transmises à Josée-Ann Jomphe, qui pourra
+                  communiquer avec vous au sujet de votre projet immobilier.
+                  Certains de ses fournisseurs les hébergent hors du Québec.
+                  Détails dans la{" "}
+                  <Link href="/politique-de-confidentialite" className="underline underline-offset-4 hover:text-ink">politique de confidentialité</Link>.
                 </p>
               </form>
             </motion.div>

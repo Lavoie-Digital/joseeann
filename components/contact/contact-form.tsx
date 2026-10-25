@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -194,8 +195,11 @@ export function ContactForm() {
       </button>
 
       <p className="text-xs leading-relaxed text-clay">
-        Vos renseignements demeurent strictement confidentiels et ne seront
-        jamais partagés.
+        Vos renseignements servent à répondre à votre demande. Ils sont transmis
+        à Josée-Ann Jomphe par l&apos;entremise de fournisseurs (envoi de
+        courriels, gestion de la clientèle), dont certains les hébergent hors du
+        Québec. Pour en savoir plus ou exercer vos droits, consultez la{" "}
+        <Link href="/politique-de-confidentialite" className="underline underline-offset-4 hover:text-ink">politique de confidentialité</Link>.
       </p>
     </form>
   );

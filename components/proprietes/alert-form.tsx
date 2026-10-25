@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Send, Loader2, CheckCircle2 } from "lucide-react";
@@ -257,8 +258,13 @@ export function AlertForm() {
       </button>
 
       <p className="text-xs leading-relaxed text-clay">
-        Vos renseignements demeurent strictement confidentiels et ne seront
-        jamais partagés.
+        Vos renseignements servent à vous transmettre par courriel les
+        propriétés qui correspondent à vos critères. Ils sont transmis à
+        Josée-Ann Jomphe par l&apos;entremise de fournisseurs (envoi de
+        courriels, gestion de la clientèle, Centris), dont certains les
+        hébergent hors du Québec. Vous pouvez arrêter les alertes en tout temps
+        en écrivant à info@jajomphe.ca. Détails dans la{" "}
+        <Link href="/politique-de-confidentialite" className="underline underline-offset-4 hover:text-ink">politique de confidentialité</Link>.
       </p>
     </form>
   );
